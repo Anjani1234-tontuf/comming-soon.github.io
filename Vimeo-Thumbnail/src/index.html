@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Extract Thumbnail from Private Vimeo Videos</title>
+	<meta name="description" content="Download thumbnails from private vimeo videos"/>
+
+	<meta name="author" content="Rustynote">
+	<meta name="robots" content="index, follow" />
+
+	<meta property="og:title" content="Extract Thumbnail from Private Vimeo Videos">
+	<meta property="og:image" content="https://rustynote.github.io/Vimeo-Thumbnail-Downloader/public/scr.png">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-8223380-30"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-8223380-30');
+	</script>
+</head>
+<body>
+	<div class="container">
+		<noscript><h3> You must have JavaScript enabled in order to use this form. <br />Please enable JavaScript and then reload this page in order to continue.</h3></noscript>
+		<div class="py-3 py-md-5 text-center">
+	        <h2>Extract Thumbnail from Private Vimeo Videos</h2>
+	        <p class="lead">Everything you enter in the form bellow is not saved anywhere. Your browser is doing everything so there's no server side calls included.</p>
+			<p>When you enter the data bellow you need to take <a href="https://developer.vimeo.com/guidelines/rate-limiting">Vimeo Rate Limits</a> into consideration. If the limit is reached,<br class="d-none d-xl-block"> script will return list of video IDs that weren't included in the archive.</p>
+			<br />
+			<h4 class="">How does it work?</h4>
+			<p>Script uses <a href="https://www.npmjs.com/package/vimeo" rel="nofollow">vimeo npm package</a> to interacting with the <a href="https://developer.vimeo.com/" rel="nofollow">Vimeo API</a>. It uses <code>/videos/{video_id}/pictures</code> endpoint to retrieve thumbnails, and once <br class="d-none d-xl-block" /> all images were retrieved and downloaded as base64 string, script will create a zip archive with <a href="https://stuk.github.io/jszip/" rel="nofollow">JSZip</a> and put images into the archive. After which zip<br class="d-none d-xl-block" /> archive with name <code>thumbs.zip</code> is downloaded.</p>
+      	</div>
+		<div class="mw-800 pb-5">
+			<form>
+				<div class="fieldset">
+					<div class="legend">Authentication</div>
+					<div class="form-group">
+						<label for="clientID">Client ID</label>
+						<input type="text" class="form-control" id="clientID" placeholder="Client ID" value="" required>
+					</div>
+					<div class="form-group">
+						<label for="clientSecret">Client Secret</label>
+						<input type="text" class="form-control" id="clientSecret" placeholder="Client Secret" value="" required>
+					</div>
+					<div class="form-group">
+						<label for="accessToken">Access Token</label>
+						<input type="text" class="form-control" id="accessToken" placeholder="Access Token" value="" required>
+					</div>
+					<p>If you don't have this, head to the <a href="https://developer.vimeo.com/apps">developer.vimeo.com/apps</a> and create an app.</p>
+				</div>
+				<div class="fieldset">
+					<div class="legend">Videos</div>
+					<div class="form-group">
+						<textarea class="form-control" rows="4" id="videos" aria-describedby="videosHelp" required></textarea>
+						<small id="videosHelp" class="form-text text-muted">Comma separated list of video IDs, or one video URL per line.</small>
+					</div>
+				</div>
+				<div class="fieldset">
+					<div class="legend">Images</div>
+					<div class="form-group">
+						<div class="custom-control custom-switch">
+		                    <input type="checkbox" class="custom-control-input" id="downloadAll" aria-describedby="downloadHelp">
+		                    <label class="custom-control-label" for="downloadAll">Download every image size</label>
+	                  	</div>
+						<small id="downloadHelp" class="form-text text-muted">There's usualy 7 images with different resolutions.</small>
+					</div>
+				</div>
+				<hr class="mb-4">
+				<button class="btn btn-primary btn-lg btn-block" type="submit">Download</button>
+			</form>
+			<div class="status-parent" style="display: none">
+				<div class="fieldset status">
+					<div class="legend">Status</div>
+				</div>
+				<div class="loading">
+					<div class="loader">Loading...</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="text-center bg-light">
+		<a href="https://wparcanum.com">Build with 🍺 by Rustynote<span class="copyright"> - Copyright&nbsp;<script>document.write(new Date().getFullYear())</script></span></a>
+		<a href="https://paypal.me/Rustynote" class="btn btn-primary btn-sm" target="_blank" onClick="ga('send', 'event', 'Links', 'Click', 'Donate');">Donate</a>
+	</footer>
+</body>
+</html>
