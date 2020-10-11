@@ -1,0 +1,183 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Social Sharing Button Embed Generator</title>
+		<script type="text/javascript" async src="sbembed.js"></script>
+		<style type="text/css">
+			#URL:focus, #Description:focus, #GraphicURL:focus{
+				color:black;
+			}
+			span,h1{
+				font-family:arial,sans-serif;
+			}
+			h1{
+				text-shadow: white 1px 1px 1px;
+			}
+			h2{
+				font-family: arial,sans-serif;
+				margin: 0em 0em 0.5em 0em;
+			}
+			.input, textarea{
+				margin-top: 3px;
+				background: #F6F6F6;
+				color: #666;
+				padding: 3px;
+				border: 1px solid #B9B9B9;
+				border-top-color: #A4A4A4;
+				-moz-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+				-ms-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+				-webkit-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+				box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+				-moz-border-radius: 3px;
+				-webkit-border-radius: 3px;
+				border-radius: 3px;
+			}
+			.button{
+				padding: 7px;
+				font-size: 13px;
+				color:white;
+				cursor:pointer;
+				border:0px solid white;
+				-moz-border-radius: 3px;
+				-webkit-border-radius: 3px;
+				border-radius: 3px;
+			}
+			.generate{
+				padding: 7px;
+				font-size: 13px;
+				border-width:1px;
+				color:white;
+				background-color: #557CD1;
+				border-color: #304EA6 #304EA6 black;
+				text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+				-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-ms-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				background-image: -moz-linear-gradient(top,#557CD1 0,#304EA6 100%);
+				background-image: -ms-linear-gradient(top,#557CD1 0,#304EA6 100%);
+				background-image: -o-linear-gradient(top,#557CD1 0,#304EA6 100%);
+				background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#557CD1),color-stop(100%,#304EA6));
+				background-image: -webkit-linear-gradient(top,#557CD1 0,#304EA6 100%);
+				background-image: linear-gradient(to bottom,#557CD1 0,#304EA6 100%);
+				cursor:pointer;
+				-moz-border-radius: 3px;
+				-webkit-border-radius: 3px;
+				border-radius: 3px;
+			}
+			.generate:hover{
+				color:white;
+				background-color: #304EA6;
+				border-color: #557CD1 #557CD1 black;
+				text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+				-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-ms-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				background-image: -moz-linear-gradient(top,#304EA6 0,#557CD1 100%);
+				background-image: -ms-linear-gradient(top,#304EA6 0,#557CD1 100%);
+				background-image: -o-linear-gradient(top,#304EA6 0,#557CD1 100%);
+				background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#304EA6),color-stop(100%,#557CD1));
+				background-image: -webkit-linear-gradient(top,#304EA6 0,#557CD1 100%);
+				background-image: linear-gradient(to bottom,#304EA6 0,#557CD1 100%);
+				cursor:pointer;
+			}
+			.reset{
+				border-width:1px;
+				background-color: #CCC;
+				border-color: #555 #555 black;
+				text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+				-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-ms-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				background-image: -moz-linear-gradient(top,#CCC 0,#555 100%);
+				background-image: -ms-linear-gradient(top,#CCC 0,#555 100%);
+				background-image: -o-linear-gradient(top,#CCC 0,#555 100%);
+				background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#CCC),color-stop(100%,#555));
+				background-image: -webkit-linear-gradient(top,#CCC 0,#555 100%);
+				background-image: linear-gradient(to bottom,#CCC 0,#555 100%);
+			}
+			.reset:hover{
+				background-color: #555;
+				border-color: #CCC #CCC black;
+				text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+				-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-ms-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+				background-image: -moz-linear-gradient(top,#555 0,#CCC 100%);
+				background-image: -ms-linear-gradient(top,#555 0,#CCC 100%);
+				background-image: -o-linear-gradient(top,#555 0,#CCC 100%);
+				background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#555),color-stop(100%,#CCC));
+				background-image: -webkit-linear-gradient(top,#555 0,#CCC 100%);
+				background-image: linear-gradient(to bottom,#555 0,#CCC 100%);
+			}
+			.optionbox{
+				border:1px solid gray;
+				-moz-border-radius:10px;
+				-o-border-radius:10px;
+				-webkit-border-radius:10px;
+				border-radius:10px;
+				padding:1em;
+				margin: 1em 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<h1>Social Media Button Embed Generator</h1>
+			<table style="width:710px;">
+				<tr>
+					<td style="width:300px;padding-right:2em;">
+						<form class="optionbox">
+							<span>URL</span>&nbsp;<span style="color:#666;font-size:0.75em;">(required)</span><br/>
+							<input type="text" class="input" id="URL" size="40" maxlength="1000" value="e.g. http://www.yourlink.com" onclick="Clear(this);select(this);" onchange="sbgen();" style="width:300px;"/><br/><br/>
+							<span>Description</span>&nbsp;<span style="color:#666;font-size:0.75em;">(required)</span><br/>
+							<input type="text" class="input" id="Description" size="40" maxlength="140" value="e.g. Title of Blog Post" onclick="Clear(this);select(this);" onchange="sbgen();" style="width:300px;"/><br/><br/>
+							<span>Graphic URL</span>&nbsp;<span style="color:#666;font-size:0.75em;">(required for Pinterest)</span><br/>
+							<input type="text" class="input" id="GraphicURL" size="40" maxlength="140" value="e.g. http://www.yourwebsite.com/yourimage.jpeg" onclick="Clear(this);select(this);" onchange="sbgen();" style="width:300px;"/><br/><br/>
+							<span>&nbsp;Button Style</span><br/>
+							<select class="input" id="bstyle" onchange="sbgen();">
+								<option value="ctop">Count to the side</option>
+								<option value="cside">Count on top</option>
+							</select><br/><br/>
+							<label><input type="checkbox" id="Facebook" onClick="sbgen();"/><span>Facebook</span></label><br/>
+							<label><input type="checkbox" id="Googleplus" onClick="sbgen();"/><span>Google+</span></label><br/>
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<label><input type="checkbox" id="Twitter" onClick="sbgen();"/><span>Twitter</span></label>
+									</td>
+									<td>
+										<span style="font-family:Courier New,monospace;font-size:18px;">&nbsp;@</span><input class="input" type="text" id="TwitterVia" style="height:18px;vertical-align:bottom;" width="15" maxlength="15" value="Handle (optional)" onclick="Clear(this);select(this);" onchange="sbgen();"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									</td>
+									<td>
+										<span style="font-family:Courier New,monospace;font-size:18px;">&nbsp;#</span><input class="input" type="text" id="TwitterHash" style="height:18px;vertical-align:bottom;" width="15" maxlength="15" value="Hashtag (optional)" onclick="Clear(this);select(this);" onchange="sbgen();"/>
+									</td>
+								</tr>
+							</table>	
+							<label><input type="checkbox" id="Linkedin" onClick="sbgen();"/><span>LinkedIn</span></label><br/>
+							<label><input type="checkbox" id="Pinterest" onClick="sbgen();"/><span>Pinterest</span></label><br/><br/>
+							<input type="button" class="generate" value="Generate Embed Code" onClick="sbgen();"/>
+							<input type="button" class="reset button" style="float:right;" value="Reset Options" onClick="clearall();sbgen();"><br/>
+						</form>
+						
+					</td>
+					<td style="vertical-align:top;">
+						<span>Embed Code</span><br/>
+						<textarea id="embedcode" rows="10" cols="35" readonly="readonly" style="max-width:334px;min-width:334px;height:239px;max-height:239px;" onclick="select(this);"></textarea><br/><br/>
+						<span>Preview:</span>
+						<br/>
+						<div id="preview">
+						</div>
+					</td>
+				</tr>
+			</table>
+		</center>
+	</body>
+</html>

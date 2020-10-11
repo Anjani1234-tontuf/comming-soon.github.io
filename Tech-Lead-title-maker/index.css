@@ -1,0 +1,26 @@
+/* © 2020 Asher Seiling*/
+:root{
+    --margin_sides_input: 450pt;
+}
+*{
+    margin: 0;
+}
+.Head_tag{
+    background-color: black;
+
+}
+.Head_tag_text{
+    margin-left: 50pt;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+p{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.Output_result{
+    margin-left: var(--margin_sides_input);
+    margin-right: var(--margin_sides_input);
+    margin-top: 25pt;
+    border-radius: 8pt;
+    background-color: rgb(190, 190, 190);
+}

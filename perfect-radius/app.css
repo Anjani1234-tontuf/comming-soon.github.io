@@ -1,0 +1,101 @@
+* {
+    padding: 1px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    padding-top: 50px;  
+    font-family: Verdana, sans-serif;
+    color: rgb(94, 94, 94);
+    text-align: center;
+}
+
+.box {
+    width: 300px;
+    height: 200px;
+    background-color: rgb(250, 192, 33);
+    margin: 30px auto;
+    transition: 0.2s ease;
+    -webkit-transition: 0.2s ease;
+    -moz-transition: 0.2s ease;
+    -ms-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    border-radius: 10% 10% 10% 10% / 10% 10% 10% 10%;
+    -webkit-border-radius: 10% 10% 10% 10% / 10% 10% 10% 10%;
+    -moz-border-radius: 10% 10% 10% 10% / 10% 10% 10% 10%;
+    -ms-border-radius: 10% 10% 10% 10% / 10% 10% 10% 10%;
+    -o-border-radius: 10% 10% 10% 10% / 10% 10% 10% 10%;
+}
+
+.controls {
+    width: 90%;
+    max-width: 500px;
+    border: 2px solid rgb(250, 192, 33);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 300px;
+    max-width: 200px;
+    height: 5px;
+    margin: 20px 10px;
+    background-color: rgb(226, 226, 226);
+    outline: none;
+    opacity: 0.6;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.slider:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 2px solid rgb(250, 192, 33);
+    background-color: rgb(255, 255, 255);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+p {
+    margin: 20px 3%;
+}
+
+button {
+    background-color: rgb(250, 192, 33);
+    color: white;
+    outline: none;
+    border: none;
+    padding: 15px 50px;
+    margin-bottom: 20px; 
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(235, 180, 29);
+}
