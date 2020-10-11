@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Major+Mono+Display"
+      rel="stylesheet"
+    />
+    <script defer src="./js/app.js"></script>
+    <title>Billboard Maker</title>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <nav class="navbar-items">
+          <div class="navbar-link navbar-link-brand">
+            Billboard Maker
+          </div>
+        </nav>
+        <nav class="navbar-items navbar-items-right">
+          <div class="navbar-link"><a href="./index.html">Home</a></div>
+          <div class="navbar-link"><a href="#">Billboard Maker</a></div>
+
+          <!-- <div class="navbar-link"><a href="./analytics.html">Analytics</a></div> -->
+          <!-- Although there is an analytics page, this has been removed temporarily, because currently it is just a holding page. -->
+
+        </nav>
+      </div>
+    </header>
+    <main>
+      
+      <!-- I have used the Advice Slip JSON API. 
+        https://api.adviceslip.com/
+      It provides random bits of advice. 
+      Unfortunately the API will only take so many requests per second, 
+      so click a few times in order to generate new advice. -->
+
+      <section>
+        <div id="billboard">
+          <h1 id="slogan">Click Here to Receive Random Advice!</h1>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        <ul>
+          <li><a href="https://www.facebook.com/manmadebooks/"><img src="img/footer_icons/facebook_white.svg"></img></a></li>
+          <li><a href="https://www.twitter.com/harrymantweets/"><img src="img/footer_icons/twitter_white.svg"></img></a></li>
+          <li><a href="https://www.linkedin.com/in/harry-man-developer/"><img src="img/footer_icons/linkedin_white.svg"></img></a></li>
+          <li><a href="http://instagram.com/harrymantweets/?hl=en"><img src="img/footer_icons/instagram_white.svg"></img></a></li>
+          <li><a href="https://www.youtube.com"><img src="img/footer_icons/youtube_white.svg"></img></a></li>
+        </ul>
+      </p>
+      <p>&copy; Harry Man 2020</p>
+      <p><a href="www.manmadebooks.co.uk">www.manmadebooks.co.uk</a> || Advice from <a href="https://api.adviceslip.com/">https://api.adviceslip.com/</a></p>
+    </footer>
+  </body>
+</html>

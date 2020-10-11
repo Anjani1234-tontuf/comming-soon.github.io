@@ -1,0 +1,170 @@
+
+/* ================================
+Imports
+================================= */
+
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+@import url('https://fonts.googleapis.com/css?family=Raleway+Dots');
+
+
+/* ================================
+General
+================================= */
+
+body {
+  background-color: #1c1d1e;
+  min-width: 100%;
+  margin: auto;
+}
+
+main{
+ display: inline-block; 
+}
+
+h1 {
+  display: block;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 6.0rem;
+  padding-bottom: 6.0rem;
+  font-size: 10vw;
+  line-height: 10vw;
+  font-family: 'Raleway Dots', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  color: rgb(255, 247, 0);
+  text-shadow: 2px 2px 8px #f4ff1d;
+  text-transform: uppercase;
+  text-align: center;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+h1 a {  
+  text-decoration: none;
+  color: rgb(255, 247, 0);
+  text-shadow: 2px 2px 8px #f4ff1d;
+}
+
+.analytics {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  line-height: 2.25rem;
+  font-size: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: white;
+}
+
+
+/* ================================
+Navigation
+================================= */
+
+
+.navbar {
+  letter-spacing: 1px;
+  display: flex;
+  width: 100%;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+  background-color: #1c1d1e;
+  color: #968569;
+  position: top;
+}
+
+.navbar-items {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem; 
+  flex-wrap: wrap;
+  margin-right: 5%;
+}
+
+.navbar-link a {
+  cursor: pointer;
+  font-size: 1.5vw;
+  padding-left: 1.25rem;
+  text-decoration: none;
+  color: #ff5600;
+}
+
+.navbar-link a:hover {
+  text-decoration: none;
+  color: #f3f3f3;
+}
+
+.navbar-items-right {
+  font-family: 'Major Mono Display', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: lowercase;
+  cursor: pointer;
+  margin-left: auto;
+  vertical-align: middle;
+}
+
+.navbar-link-brand {
+  color: #f3f3f3;
+  letter-spacing: 0.25px;
+  font-size: 2.5vw;
+  text-transform: lowercase;
+  padding-left: 1.0rem;
+  vertical-align: middle;
+  font-family: 'Major Mono Display', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* ================================
+Footer
+================================= */
+
+footer {
+  display: block;
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #1c1d1e;
+  padding-bottom: 3rem;
+  text-align: center;
+}
+
+footer p {
+  font-family: 'Major Mono Display', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.25rem;
+  font-size: 0.75rem;
+  text-transform: lowercase;
+  color: #f3f3f3;
+  background-color: #1c1d1e;
+}
+
+footer ul {
+  display: block;
+  box-sizing: border-box;
+}
+
+footer ul li {
+    display: inline;
+    list-style-type: none;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+footer ul li img {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+footer img {
+    max-height: 1.25rem;
+}
+
+footer a {
+  text-decoration: none;
+  color: #ff5600;
+}
+
+footer img:hover {
+  color: #ff5600;
+}
+
+footer a:hover {
+  text-decoration: none;
+  color: #f3f3f3;
+}
