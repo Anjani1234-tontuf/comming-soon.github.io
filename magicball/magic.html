@@ -1,0 +1,40 @@
+<html>
+<!-- Dave Reed          magic.html           2/10/02 -->
+<!--                                                 -->
+<!-- Web page that simulates a magic 8-ball          -->
+<!----------------------------------------------------->
+
+<head>
+  <title> Dave's Magic 8-ball</title>
+
+  <script language="JavaScript" src="random.js"></script>
+
+  <script language="JavaScript">
+    function GetAnswer()
+    {
+      document.magicForm.answer.value = 
+        randomOneOf(["Definitely.", "Quite possibly.", "Highly unlikely.", "Doubtful.", "No way!", "Outlook is unclear.  Ask again later."]);
+    }
+  </script>
+</head>
+
+<body>
+  <center>
+    <h2>Dave's Magic 8-ball</h2>
+
+    <hr>
+    <p>Enter your (yes/no) question in the box, then click the button to receive 
+       an answer from the Magic 8-ball.
+
+
+    <form name="magicForm">
+      <p><textarea name="question" rows=3 cols=40 wrap="virtual"></textarea>
+
+      <p><input type="button" value="Click for answer" onClick="GetAnswer();">
+
+      <p>The Magic 8-ball says:<br>
+      <input type="text" name="answer" size=40 value="">  
+    </form>
+
+</body>
+</html>

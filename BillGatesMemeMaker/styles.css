@@ -1,0 +1,573 @@
+html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#canvas-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-twitter {
+    background-color: none;
+}
+
+#title {
+    text-align: center;
+    transform: translate(0, -250px);
+}
+
+h1 {
+    margin: 5px;
+}
+
+p {
+    margin: 6px;
+}
+
+i {
+    font-weight: bold;
+}
+
+#title img {
+    height: 20px;
+    transform: translate(0, 5px);
+}
+
+a {
+    color: black;
+    font-weight: bold;
+    transition-duration: 0.2s;
+}
+
+a:hover {
+    color: black;
+    margin: 6px;
+}
+
+#credits {
+    text-align: center;
+    font-size: 12px;
+    transform: translate(0, 250px);
+}
+
+#credits span {
+    font-size: 14px;
+}
+
+span a {
+    text-decoration: none;
+}
+
+#credits img {
+    height: 16px;
+    transform: translate(1px, 4px);
+}
+
+#canvas-div {
+    transform: scale(0.4);
+    overflow: hidden;
+    position: absolute;
+}
+
+#canvas {
+    border-radius: 10px;
+    border: 10px solid black;
+}
+
+#wink-text {
+    opacity: 0;
+    position: absolute;
+    z-index: 10;
+    font-size: 10px;
+    font-weight: bold;
+    transform: rotate(-10deg) translate(17px, -80px);
+    transition-duration: 0.4s;
+}
+
+#wink {
+    opacity: 0;
+    position: absolute;
+    z-index: 10;
+    transform: scale(0.4) translate(130px, -178px);
+}
+
+#loadingScreen {
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    position: absolute;
+    background: white;
+    width: 100vw;
+    height: 100vh;
+    transition-duration: 0.4s;
+}
+
+.loading-bill {
+    position: absolute;
+    z-index: 50;
+    width: 40vw;
+    height: auto;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-button {
+    position: absolute;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    transition-duration: 0.2s;
+}
+
+.select-button:hover {
+    -webkit-box-shadow: 0px 0px 104px 56px rgb(255, 255, 255);
+    -moz-box-shadow: 0px 0px 104px 56px rgb(255, 255, 255);
+    box-shadow: 0px 0px 104px 56px rgb(255, 255, 255);
+}
+
+.select-button:focus {
+    outline: none;
+    -webkit-box-shadow: 0px 0px 104px 56px rgb(255, 255, 255);
+    -moz-box-shadow: 0px 0px 104px 56px rgb(255, 255, 255);
+    box-shadow: 0px 0px 104px 56px rgb(255, 255, 255);
+}
+
+#select-buttons {
+    position: absolute;
+    z-index: 10;
+    transform: translate(-65px, 27px);
+}
+
+.main-screen-button {
+    cursor: pointer;
+    font-size: 17px;
+    width: 129px;
+    height: 90px;
+    color: white;
+    background-color: black;
+    transform: translate(92px, 54px) rotate(3deg);
+}
+
+.second-screen-button {
+    font-size: 14px;
+    width: 65px;
+    height: 50px;
+    color: white;
+    background-color: black;
+    transform: translate(-89px, -178px) rotate(-9deg);
+}
+
+.binder-button {
+    font-size: 18px;
+    width: 109px;
+    height: 57px;
+    color: black;
+    background-color: white;
+    transform: translate(-117px, 99px) rotate(-14deg) skew(43deg, 7deg);
+}
+
+#controls {
+    display: flex;
+    transform: translate(0, 240px);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hidden {
+    z-index: -10;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visible {
+    z-index: 690;
+    opacity: 1!important;
+    pointer-events: all;
+}
+
+#chromeWarning {
+    font-weight: bold;
+}
+
+.ChromeMessageHidden {
+    opacity: 0;
+    position: absolute;
+    z-index: -200!important;
+}
+
+.popup-visible {
+    z-index: 69;
+    opacity: 1!important;
+    pointer-events: all!important;
+    transform: translateY(0px)!important;
+}
+
+button:focus {outline:0;}
+
+.button-class {
+    background-color: white;
+    border-radius: 50px;
+    color: black;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    transition-duration: 0.4s;
+    margin: 4px;
+    border: 1px black solid;
+}
+
+button img {
+    height: 16px;
+    filter: invert(0);
+    transform: translate(0px, 1px);
+    transition-duration: 0.4s;
+    margin-right: 4px;
+}
+
+.button-class:hover {
+    background-color: black;
+    color: white;
+}
+
+.button-class:hover > img {
+    filter: invert(1);
+    transform: scale(1.2) translate(0, 0.5px);
+}
+
+.button-selected {
+    background-color: black;
+    color: white;
+}
+
+.button-selected > img {
+    filter: invert(1);
+    transform: scale(1.2) translate(0, 0.5px);
+}
+
+.bubble-visible {
+    z-index: 69;
+    opacity: 1!important;
+    pointer-events: all!important;
+    margin-top: 0px !important;
+}
+
+.help-bubble {
+    opacity: 0;
+    z-index: 69;
+    position: absolute;
+    transition-duration: 0.4s;
+    offset: none;
+    margin-top: 10px;
+}
+
+.help-bubble > img {
+    opacity: 1;
+    z-index: 69;
+    position: absolute;
+    height: 64px;
+    transition-duration: 0.2s;
+}
+
+.bubble-2 {
+    transform: translate(-230px, 66px);
+}
+
+.bubble-3 {
+    transform: translate(-230px, -211px);
+}
+
+.help-text {
+    opacity: 1;
+    position: absolute;
+    z-index: 69;
+    width: 200px;
+    text-align: center;
+    transform: translate(-2px, 6px);
+    font-size: 15px;
+}
+
+.text-2 {
+    width: 190px;
+    transform: translate(7px, 6px);
+}
+
+.text-3 {
+    width: 180px;
+    transform: translate(9px, 6px);
+}
+
+#download-popup {
+    opacity: 0;
+    z-index: 690;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.4s;
+    transform: translateY(40px);
+    pointer-events: none;
+}
+
+#holdToSaveImage {
+    opacity: 0;
+    bottom: 1px;
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    background: black;
+    width: 70%;
+    text-align: center;
+    border-radius: 50px;
+    padding: 2px;
+}
+
+.download-wrapper {
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+#closeIcon {
+    height: 30px;
+    position: absolute;
+    cursor: pointer;
+    filter: invert(1);
+    background: beige;
+    border-radius: 50px;
+    transition-duration: 0.4s;
+    transform: translate(-305px, -232px);
+    border: 1px solid white;
+}
+
+#closeIcon:hover {
+    filter: invert(0);
+    background: none;
+    border-radius: 0px;
+    background: white;
+    border-radius: 50px;
+    border: 1px solid white;
+}
+
+#GeneratedImage {
+    width: 602px;
+    height: 450px;
+    border-radius: 10px;
+    border: 10px solid black;
+}
+
+.download-button {
+    width: 500px;
+    position: absolute;
+    justify-content: center;
+    bottom: 20px;
+    transform: translate(-5px, 0px);
+}
+
+#loadingUpdateWrapper {
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+#updateLoadingBG {
+    z-index: 80;
+    position: absolute;
+    width: 600px;
+    height: 500px;
+    background: radial-gradient(#ffffff, #00000000);
+}
+
+#updateLoadingBill {
+    z-index: 81;
+    position: absolute;
+    width: 200px;
+    animation: spin 2s infinite linear;
+    -webkit-animation:spin 2s infinite linear;
+}
+
+.puff-in-center {
+	-webkit-animation: puff-in-center 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) reverse both;
+	        animation: puff-in-center 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) reverse both;
+}
+
+.not-selectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.opacity-half {
+   opacity: 0.5;
+}
+
+
+/*  Mobile Styles  */
+@media only screen and (max-width: 700px) {
+
+    #canvas-items {
+        transform: scale(0.6);
+    }
+
+    #title {
+        transform: translate(0, -160px);
+    }
+
+    #controls {
+        transform: translate(0, 160px);
+    }
+
+    #credits {
+        transform: translate(0, 170px);
+    }
+
+    #updateLoadingBG {
+        width: 400px;
+        height: 300px;
+    }
+
+    #updateLoadingBill {
+        width: 120px;
+    }
+
+    #imageDownloadButton {
+        opacity: 0;
+        z-index: -10;
+        pointer-events: none;
+        overflow: hidden;
+        width: 10px;
+    }
+
+    #loadingBill {
+        width: 20vw;
+    }
+
+    #GeneratedImage {
+        width: 342px;
+        height: 260px;
+    }
+
+    #closeIcon {
+        transform: translate(-175px, -135px);
+    }
+
+    #holdToSaveImage {
+        opacity: 1;
+        bottom: 150px;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+
+    #title {
+        transform: translate(0, -160px);
+        margin-top: 200px;
+    }
+
+    #controls {
+        transform: translate(0, 160px);
+    }
+
+    #credits {
+        transform: translate(0, 170px);
+        margin-bottom: 50px;
+    }
+
+}
+
+
+
+/* ----------------------------------------------
+ * Generated by Animista
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+@-webkit-keyframes puff-in-center {
+    0% {
+        -webkit-transform: scale(3);
+                transform: scale(3);
+        -webkit-filter: blur(4px);
+                filter: blur(4px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-filter: blur(0px);
+                filter: blur(0px);
+        opacity: 1;
+    }
+}
+@keyframes puff-in-center {
+    0% {
+        -webkit-transform: scale(3);
+                transform: scale(3);
+        -webkit-filter: blur(4px);
+                filter: blur(4px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-filter: blur(0px);
+                filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+/* Spin Animation */
+
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

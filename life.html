@@ -1,0 +1,265 @@
+<!doctype html>
+<!–– life.html                            Dave Reed ––> 
+<!–– This page simulates Conway's Game of Life.     ––> 
+<!–– ============================================== ––>
+
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title> Game of Life </title> 
+   
+   <script>
+     function setup() {
+       CANVAS = document.getElementById("lifeCanvas");
+       CONTEXT = CANVAS.getContext("2d");
+       CANVAS.addEventListener("mousedown", userChange, false);
+       DEFAULT = CANVAS.width;
+       initGrid();
+     }
+     
+     function initGrid() {
+       GRIDSIZE = parseInt(document.getElementById("sizeBox").value);
+       document.getElementById("gridSize").innerHTML = GRIDSIZE;
+       STEPSIZE = Math.floor(DEFAULT/GRIDSIZE);
+       CANVAS.width = GRIDSIZE*STEPSIZE;
+       CANVAS.height = CANVAS.width;
+
+       CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);   
+
+       CONTEXT.beginPath();  
+       CONTEXT.strokeStyle="#d3d3d3";   
+       for (var i = 1; i < GRIDSIZE; i++) {
+           CONTEXT.moveTo(0, i*STEPSIZE);
+           CONTEXT.lineTo(CANVAS.width, i*STEPSIZE);
+           CONTEXT.stroke();
+           
+           CONTEXT.moveTo(i*STEPSIZE, 0);
+           CONTEXT.lineTo(i*STEPSIZE, CANVAS.height);
+           CONTEXT.stroke();           
+       }
+          
+       GRID = [];
+       for (var r = 0; r < GRIDSIZE; r++) {
+         var temprow = [];
+         for (var c = 0; c < GRIDSIZE; c++) {
+           temprow[c] = false;
+         }
+         GRID[r] = temprow;
+       }     
+     }
+     
+    function userChange(event)
+	{
+	  var x, y;
+	  if (event.pageX || event.pageY) { 
+        x = event.pageX - CANVAS.offsetLeft;
+        y = event.pageY - CANVAS.offsetTop;
+      }
+      else { 
+        x = event.clientX + document.body.scrollLeft + 
+            document.documentElement.scrollLeft - CANVAS.offsetLeft; 
+        y = event.clientY + document.body.scrollTop + 
+            document.documentElement.scrollTop - CANVAS.offsetTop; 
+      } 
+
+	  var row = Math.floor(y / STEPSIZE);
+	  var col = Math.floor(x / STEPSIZE);	  
+	  GRID[row][col] = !GRID[row][col];
+	  redrawCell(row, col);
+	} 
+	
+	function redrawCell(row, col) {
+	  if (GRID[row][col]) {
+	    CONTEXT.fillStyle ="black";
+	  }
+	  else {
+	    CONTEXT.fillStyle = "white";
+	  }
+	  CONTEXT.fillRect(STEPSIZE*col+1, STEPSIZE*row+1, STEPSIZE-2, STEPSIZE-2);	
+	}
+	
+	function redrawGrid() {
+	  for (var r = 0; r < GRIDSIZE; r++) {
+	    for (var c = 0; c < GRIDSIZE; c++) {
+	        redrawCell(r, c);
+	    }
+	  }	
+	}
+	
+	function randomizeGrid() {
+	  for (var r = 0; r < GRIDSIZE; r++) {
+	    for (var c = 0; c < GRIDSIZE; c++) {
+	        if (Math.random() < 0.5) {
+	          GRID[r][c] = false;
+	        }
+	        else {
+	          GRID[r][c] = true;
+	        }
+	    }
+	  }	
+	  redrawGrid();	  
+	  document.getElementById("genSpan").innerHTML = 0;
+	}
+	
+	function clearGrid() {
+	  for (var r = 0; r < GRIDSIZE; r++) {
+	    for (var c = 0; c < GRIDSIZE; c++) {
+	          GRID[r][c] = false;
+	    }
+	  }	
+	  redrawGrid();	 	
+	  document.getElementById("genSpan").innerHTML = 0;
+	}
+
+	function glider() {
+	  var center = Math.floor(GRIDSIZE/2);
+	  	  
+	  clearGrid();
+	  GRID[center-2][center] = true;
+	  GRID[center-1][center+1] = true;
+	  GRID[center][center-1] = true;
+	  GRID[center][center] = true;
+	  GRID[center][center+1] = true;
+	  redrawGrid();
+	}
+
+	function generator() {
+	  var center = Math.floor(GRIDSIZE/2);
+	  	  
+	  clearGrid();
+	  GRID[center-4][center-5] = true;
+	  GRID[center-3][center-5] = true;
+	  GRID[center-2][center-7] = true;
+	  GRID[center-2][center-6] = true;
+	  GRID[center-2][center-5] = true;
+	  
+	  GRID[center][center-1] = true;
+	  GRID[center][center] = true;
+	  GRID[center][center+1] = true;
+	  GRID[center+1][center] = true;
+	  	  
+	  GRID[center+4][center+5] = true;
+	  GRID[center+3][center+5] = true;
+	  GRID[center+2][center+7] = true;
+	  GRID[center+2][center+6] = true;
+	  GRID[center+2][center+5] = true;  
+	  redrawGrid();
+	}
+		
+	function acorn() {
+	  var center = Math.floor(GRIDSIZE/2);
+	  	  
+	  clearGrid();
+	  GRID[center-2][center-2] = true;
+	  GRID[center-1][center] = true;
+	  GRID[center][center-3] = true;
+	  GRID[center][center-2] = true;
+	  GRID[center][center+1] = true;
+	  GRID[center][center+2] = true;
+	  GRID[center][center+3] = true;
+	  redrawGrid();
+	}
+	
+	function neighborCount(grid, row, col) {
+	  var count = 0;
+	  for (var r = row-1; r <= row+1; r++) {
+	    for (var c = col-1; c <= col+1; c++) {
+	      if (r >= 0 && r < GRIDSIZE && c >= 0 && c < GRIDSIZE && 
+	         (r != row || c != col) && grid[r][c]) {
+	        count++;
+	      }
+	    }
+	  }
+	  return count;
+	}
+	
+	function nextGeneration() {
+	  var copyGrid = [];
+	  for (var r = 0; r < GRIDSIZE; r++) {
+         var temprow = [];
+         for (var c = 0; c < GRIDSIZE; c++) {
+           temprow[c] = GRID[r][c];
+         }
+         copyGrid[r] = temprow;
+      }
+     
+	  for (r = 0; r < GRIDSIZE; r++) {
+	    for (c = 0; c < GRIDSIZE; c++) {
+	      var neighbors = neighborCount(copyGrid, r, c);
+	      if (copyGrid[r][c] && (neighbors < 2 || neighbors > 3)) {
+	        GRID[r][c] = false;
+	      }
+	      else if (!copyGrid[r][c] && neighbors == 3) {
+	        GRID[r][c] = true;
+	      }
+	    }
+	  }
+	  redrawGrid();
+	  document.getElementById("genSpan").innerHTML = parseInt(document.getElementById("genSpan").innerHTML)+1;
+	}
+	
+	function evolveAction(buttonElement) {	 
+	  if (document.getElementById("evoButton").value == "Start the Evolution") {
+	    document.getElementById("evoButton").value = "Stop the Evolution";
+	    document.getElementById("delaySpan").style.visibility="hidden";
+	    document.getElementById("genButton").style.visibility = "hidden";
+	    nextGeneration();
+	    var delay=Math.round(1000*parseFloat(document.getElementById("delayBox").value));
+	    evo = setInterval(nextGeneration, delay);
+	  }
+	  else {
+	    document.getElementById("evoButton").value = "Start the Evolution";
+	    document.getElementById("delaySpan").style.visibility="visible";
+	    document.getElementById("genButton").style.visibility = "visible";
+	    clearInterval(evo);	  
+	  }
+	}
+
+   </script>
+ </head>
+ 
+ <body onload="setup();">
+     <h2 style="text-align:center">Game of Life Simulator</h2>
+     <h4 style="text-align:center">Dave Reed, Creighton University</h4>
+     <hr>
+     
+   <p>
+    Grid size: <span id="gridSize">50</span> &nbsp; &nbsp; &nbsp; &nbsp; <input type="range" id="sizeBox" min=2 max=100 value=50 style="width:250px" onchange="initGrid();"> 
+   <br>
+      <canvas id="lifeCanvas" width="400" height="400"
+             style="border:1px solid #000000; float:left">
+             Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    </p>
+    
+    <div style="margin-left:420px">
+      <p>The Game of Life is a cellular automata model invented by John Conway.     
+               Each cell in the grid represents an organism in a simple ecosystem.  The rules for survival and procreation are simple:  
+               <ul>
+               <li>A living organism will die if it has fewer than 2 or more than 3 living neighbors.
+               <li>An organism is born in a cell when it has exactly 3 living neighbors.
+               </ul>
+      </p>
+      <hr>
+      <p><b>Setting the initial state of the grid:</b> Click on individual cells in the grid to toggle their values (from dead/white to alive/black).  You can also randomize or clear the grid contents:
+          <blockquote>
+            <input type="button" value="Clear Grid" onclick="clearGrid();"> 
+            <input type="button" value="Random" onclick="randomizeGrid();"> 
+            <input type="button" value="Glider" onclick="glider();"> 
+            <input type="button" value="Glider Generator" onclick="generator();">             
+            <input type="button" value="Acorn" onclick="acorn();">  
+         </blockquote>
+      </p>
+      <hr>
+      <p><b>Running the simulation:</b> You can click to see one generation at a time, or start the continuous evolution process: 
+            <blockquote>
+            <input type="button" id="genButton" value = "See Next Generation" onclick="nextGeneration();"> 
+            <br><br>
+            <input type="button" id="evoButton" value="Start the Evolution" onclick="evolveAction();">     
+             <span id="delaySpan">with <input type="text" id="delayBox" size=2 value=0.5> second delay</span>
+             </blockquote>    
+            Generation: <span id="genSpan">0</span>      
+            </p> 
+   </div> 
+ </body>
+</html>

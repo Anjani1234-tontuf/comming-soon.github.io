@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Image to use:</p>
+<img id="image" width="220" height="277" src="https://www.w3schools.com/tags/img_the_scream.jpg" alt="The Scream">
+
+<p>Canvas:</p>
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas><br>
+<input type="text" id="image-link"><button onclick="updateImage()">Update Image</button><button onclick="updateCanvas()">Update Canvas</button>
+<button onclick="clearCanvas()">Clear Canvas</button><br>
+<button onclick="downloadCanvas()">Download Canvas</button><br>
+<script>
+window.onload = updateCanvas()
+
+
+const img = document.getElementById("image");
+
+function updateImage() {
+  const image = document.getElementById('image');
+  const link = document.getElementById("image-link");
+  image.src = link.value
+}
+
+function updateCanvas() {
+  const canvas = document.getElementById("myCanvas");
+  const context = canvas.getContext("2d");
+  const img = document.getElementById("image");
+  context.drawImage(img, 10, 10);
+}
+
+function clearCanvas(){
+  const canvas = document.getElementById("myCanvas");
+  const context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+function downloadCanvas(){
+  var canvas = document.getElementById('myCanvas');
+  var image = canvas.toDataURL('image/jpeg', 1.0);
+  var link = document.createElement('a');
+  link.download = "my-image.jpg";
+  link.href = image;
+  link.click();
+}
+</script>
+
+</body>
+</html>

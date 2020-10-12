@@ -1,0 +1,163 @@
+<html>
+<!-- ========================================================= -->
+<!-- Dave Reed (davereed@creighton.edu)                1/10/15 -->
+<!-- This version of the Pirate Translator was developed for   -->
+<!-- the Pirates & Treasures Exhibit at the Science Spectrum   -->
+<!-- in Lubbock, Texas.  It is based on a page developed at    -->
+<!-- Creighton University and incorporated into an exercise in --> 
+<!--    A Balanced Introduction to Computer Science, 3rd ed.   -->
+<!--    David Reed                                             -->
+<!--    Prentice-Hall, 2011.                                   -->
+<!--    ISBN 978-0-13-216675-1                                 -->
+<!-- ========================================================= -->
+
+<head>
+  <title>Cap'n Dave's Pirate Translator</title>
+  
+  <script>
+    PHRASES = [["tell", "be tellin'"], ["tells", "be tellin'"], ["told", "tol'"],
+               ["say", "be sayin'"], ["says", "be sayin'"], ["said", "twas sayin'"],
+		       ["know", "be knowin'"], ["knows", "be knowin'"], ["knew", "knowed"],
+		       ["think", "be thinkin'"], ["thinks", "be thinkin'"], ["thought", "twas thinkin'"],
+		       ["believe", "be believin'"], ["believes", "be believin'"], ["believed", "twas believin''"],
+		       ["wonder", "be wonderin'"], ["wonders", "be wonderin'"], ["wondered", "twas wonderin'"],
+		       ["love", "be lovin'"], ["loves", "be lovin'"], ["loved", "twas lovin'"],
+		       ["hate", "be hatin'"], ["hates", "be hatin'"], ["hated", "twas hatin'"],               ["die", "visit Davey Jones' Locker"], ["dies", "visits Davey Jones' Locker"], ["died", "visited Davey Jones' Locker"],
+			   ["stop", "belay"], ["stops", "belays"], ["stopped", "belayed"],
+			   ["sleep", "take a caulk"], ["sleeps", "takes a caulk"], ["slept", "took a caulk"],
+			   ["leave", "weigh anchor"], ["leaves", "weighs anchor"],
+			   ["cheat", "hornswaggle"], ["cheats", "hornswaggles"], ["cheated", "hornswaggled"],
+			   ["clean", "titivate"], ["cleans", "titivates"], ["cleaned", "titivated"],
+			   ["hurry", "be three sheets t' th' wind"], ["hurried", "twas three sheets t' th' wind"],
+			   ["rob", "plunder"], ["robs", "plunders"], ["robbed", "plundered"],
+			   ["steal", "pillage"], ["steals", "pillages"], ["stole", "pillaged"], ["stolen", "pillaged"],
+			   ["lean", "list"], ["leans", "lists"], ["leaned", "listed"],
+			   ["talk", "parlay"], ["talks", "parlays"], ["talked", "parlayed"],
+			   ["surrender", "strike th' colors"], ["surrenders", "strikes th' colors"], ["surrendered", "struck th' colors"],
+			   ["find", "come across"], ["finds", "comes across"], ["found", "came across"],
+			   ["kill", "keel-haul"], ["kills", "keel-hauls"], ["killed", "keel-hauled"],
+			   ["sink", "scuttle"], ["sinks", "scuttles"], ["sank", "scuttled"],
+			   
+			   ["computing", "figurin'"], ["teaching", "teachin'"],
+			   ["museum", "brainy shack"],
+			   
+			   ["friend", "bucko"], ["friends", "buckos"], 
+			   ["sir", "matey"], ["sirs", "mateys"],
+			   ["officer", "bosun"], ["officers", "bosuns"],
+               ["madam", "proud beauty"], ["madams", "proud beauties"], 
+			   ["boy", "lad"], ["boys", "lads"], 
+			   ["girl", "lassie"], ["girls", "lassies"],
+			   ["man", "swab"], ["men", "swabs"], 
+			   ["woman", "lass"], ["women", "lasses"],
+			   ["mother", "dear ol' mum, bless her black soul"], ["mom", "dear ol' mum, bless her black soul"], 
+			   ["father", "cursed ol' dad"], ["dad", "cursed ol' dad"],
+			   ["sailor", "swab"], ["sailors", "swabs"], 
+			   ["stranger", "scurvy dog"], ["strangers", "scurvy dogs"],
+			   ["captain", "cap'n"], ["captains", "cap'ns"],
+			   ["child", "sprog"], ["children", "sprogs"],
+			   ["idiot", "squiffy"], ["idiots", "squiffies"],
+			   ["rascal", "picaroon"], ["rascals", "picaroons"],
+			   
+			   ["restroom", "head"], ["restrooms", "heads"], 
+			   ["bathroom", "head"], ["bathrooms", "heads"], 
+			   ["restaurant", "galley"], ["restaurants", "galleys"],
+               ["hotel", "fleabag inn"], ["hotels", "fleabag inns"], 
+			   ["pub", "Skull & Scuppers"], ["pubs", "Skulls & Scuppers"], 
+			   ["mall", "market"], ["malls", "markets"],
+               ["bank", "buried treasure"], ["banks", "buried treasures"], 
+			   ["ocean", "briny deep"],	["oceans", "briny deeps"],	
+			   ["sea", "briny deep"],	["seas", "briny deeps"],	
+			   			   	
+			   ["hello", "ahoy"], ["hi", "yo-ho-ho"], ["pardon me", "avast"], 
+               ["excuse me", "arrr"], ["good luck", "fair winds"], 
+			   ["nonsense", "bilge"], ["how far", "how many leagues"], 
+			   ["where", "whar"], ["yes", "aye"], ["none", "nary"],
+			   ["old", "barnacle-covered"], ["attractive", "comely"], 
+			   ["happy", "grog-filled"], ["quickly", "smartly"],
+               ["nearby", "broadside"], ["drunk", "loaded t' th' gunwhales"],
+               ["stupid", "addled"], ["after", "aft"], ["forward", "fore"], 
+			   ["over", "o'er"], ["ever", "e'er"], ["never", "ne'er"],
+			   ["weak", "lily livered"],
+               ["song", "shanty"], ["songs", "shanties"], 
+			   ["wealth", "booty"], ["money", "doubloons"], 
+			   ["coin", "piece o' eight"], ["coins", "pieces o' eight"],
+			   ["food", "grub"], ["a drink", "a barrel o' rum"],  
+			   ["nose", "prow"], ["noses", "prows"],             
+               ["eye", "deadlight"], ["eyes", "deadlights"], 
+			   ["disease", "pox"], ["diseases", "poxes"],
+               ["sword", "cutlass"], ["swords", "cutlasses"],
+			   ["flag", "jolly roger"], ["flags", "jolly rogers"], 
+			   ["cannon", "six pounder"], ["cannons", "six pounders"],
+			   ["reward", "bounty"], ["rewards", "bounties"], ["mercy", "quarter"],
+			   
+			   ["my", "me"], ["your", "yer"], ["you", "ye"], 
+			   ["is", "be"], ["are", "be"], ["am", "be"], ["there", "thar"],
+			   ["was", "twas"], ["were", "twer"], ["and", "n'"], 
+               ["the", "th'"], ["to", "t'"], ["for", "fer"], ["of", "o'"]
+              ];
+
+    function Capitalize(str)
+    // Returns: a copy of str with the first letter capitalized
+    {
+        return str.charAt(0).toUpperCase() + str.substring(1);
+    }
+        
+    function Translate(text, srcLang)
+    // Returns: a copy of text with English phrases replaced by piratey equivalemts 
+    {
+        for (var i = 0; i < PHRASES.length; i++) {
+            var toReplace = new RegExp("\\b"+PHRASES[i][srcLang]+"(\\b|\\s|$)", "i");
+		       
+            var index = text.search(toReplace);
+            while (index != -1) {
+               if (text.charAt(index) >= "A" && text.charAt(index) <= "Z") {
+                   text = text.substring(0, index) + 
+									     Capitalize(PHRASES[i][(srcLang+1)%2]) +
+									     text.substring(index+PHRASES[i][srcLang].length);
+               } 
+               else {
+                   text = text.substring(0, index) + 
+									     PHRASES[i][(srcLang+1)%2] +
+									     text.substring(index+PHRASES[i][srcLang].length);
+               }
+               index = text.search(toReplace);
+            }
+        }
+        return text;
+    }
+  </script>
+</head>
+
+<body>
+  <div style="text-align:center">
+  <table style="margin-left:auto;margin-right:auto">
+  <tr><td><img src="Images/exhibitLogo.jpg"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+      <td style="text-align:center"><h2 style="color:red;font-size:2.5em">Cap'n Dave's Pirate Translator</h2> 
+          <h4 style="font-size:1.25em">Enter English text in the box on the left, <br>then click on the red arrow to see it translated into "Pirate." </h4>
+          <p><i>This page was developed by Dave Reed at Creighton University,<br>
+              as an exercise for the book "A Balanced Introduction to Computer Science."</i></p>
+      <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  
+           <img src="Images/scienceSpectrum.jpg">
+  </table>
+    
+  <hr />
+  
+  <p><br></p>
+  
+  <table  style="width:90%;height:50%;margin-left:auto;margin-right:auto">
+  <tr><td align="center"><img src="Images/usaFlag.gif" width=100> &nbsp; <span style="font-size:1.5em"> <b>English</b></span> &nbsp; <img src="Images/britainFlag.gif" width=100>
+      <br>
+  <textarea id="English" style="overflow:auto;resize:none;width:100%;height:100%;background:lightgray;font-family:Lucinda Console, Courier New, Monospace;font-size:1.5em"></textarea> </td>
+      <td align="center">
+      <br><br>
+          &nbsp; &nbsp; <img src="Images/translateButton.png"
+               onmouseover="this.style.cursor='pointer'"
+               onclick="document.getElementById('Pirate').value =
+                        Translate(document.getElementById('English').value, 0);"> 			    
+     <td align="center"><img src="Images/pirateFlag1.gif" width=100> &nbsp; <span style="font-size:1.5em"> <b>Pirate</b></span> &nbsp; <img src="Images/pirateFlag2.gif" width=100> <br>
+     <textarea id="Pirate" readonly style="overflow:auto;resize:none;width:100%;height:100%;background:lightgray;font-family:Lucinda Console, Courier New, Monospace;font-size:1.5em"></textarea> </td>
+  </tr>
+  </table>
+  </div>
+</body>
+</html>

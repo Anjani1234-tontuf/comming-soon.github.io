@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Bill Gates Code Meme maker created by Alex Leybourne">
+    <meta name="robots" content="index,follow">
+    <script src="./html2canvas.min.js"></script>
+    <title>Bill Gates Code Meme Maker</title>
+</head>
+<body>
+    <div class="frame">
+        <div id="capture">
+            <div class="main-image"><img id="second-screen" width="54px" src="./images/VueIcon.png"></div>
+            <img class="template-image" src="./images/BillGatesMemeTemplate.png" alt="Bill Gates Meme">
+        </div>
+    </div>
+
+    <input type="text" id="image-link"><button onclick="updateImage()">Update</button>
+    <button onclick="screenShot()">Screenshot</button>
+
+    <style>
+
+        .frame {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #capture {
+            width: min-content;
+            height: min-content;
+        }
+
+        .template-image {
+            position: relative;
+            z-index: 4;
+            width: 800px;
+        }
+
+        .main-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            background: #0A0A09;
+            z-index: 1;
+            width: 120px;
+            height: 70px;
+            width: 76px;
+            height: 70px;
+            transform: translate(189px, 90px) skew(8deg, -10deg);
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        function screenShot() {
+            html2canvas(document.querySelector("#capture")).then(canvas => {
+                document.body.appendChild(canvas)
+                // var link = document.createElement('a');
+                // link.download = 'Bill Gates Codes.png';
+                // link.href = canvas.toDataURL()
+                // link.click();
+            });
+        };
+
+        function updateImage() {
+            const image = document.getElementById('second-screen');
+            const link = document.getElementById("image-link");
+            image.src = link.value
+        }
+        
+    </script>
+</body>
+</html>

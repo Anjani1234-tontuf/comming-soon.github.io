@@ -1,0 +1,75 @@
+<HTML>
+ <!-- Dave Reed             slots.html         10/20/99 -->
+ <!-- This page simulates a slot machine.               -->
+ <!------------------------------------------------------->
+
+ <HEAD>
+   <TITLE> Online Slots </TITLE>
+   <SCRIPT LANGUAGE="JavaScript" SRC="random.js"></SCRIPT>
+   <SCRIPT LANGUAGE="JavaScript">
+       function DoSpin()
+       // Assumes: the page contains 3 images (slot1, slot2, slot3) and
+       //          a text box containing a dollar amount (bankroll)
+       // Results: displays a random spin of the slots and updates the
+       //          player's bankroll (-1 per spin, +13 if winner)
+       {
+         var response;
+
+         if (document.SlotForm.bankroll.value == 0) {
+            response = prompt("Sorry, you are all tapped out!\n" +
+                              "Would you like a $20 loan? (yes or no)",
+                              "yes");
+            if (response == "yes") {
+                document.SlotForm.bankroll.value = 20;
+                document.SlotForm.debt.value = 
+                    parseFloat(document.SlotForm.debt.value) + 20;
+            }
+         }
+         
+         if (document.SlotForm.bankroll.value > 0) {
+           document.SlotForm.bankroll.value = 
+              parseFloat(document.SlotForm.bankroll.value) - 1;
+
+           document.images.slot1.src=
+              "Images/" +
+              randomOneOf(["cherry.jpg", "lemon.jpg", "bar.jpg", "donut.jpg"]);
+           document.images.slot2.src=
+              "Images/" +
+              randomOneOf(["cherry.jpg", "lemon.jpg", "bar.jpg", "donut.jpg"]);
+           document.images.slot3.src=
+              "Images/" +
+              randomOneOf(["cherry.jpg", "lemon.jpg", "bar.jpg", "donut.jpg"]);
+
+           if (document.images.slot1.src == document.images.slot2.src &&
+               document.images.slot2.src == document.images.slot3.src) {
+                 alert("A WINNER!");
+                 document.SlotForm.bankroll.value = 
+                    parseFloat(document.SlotForm.bankroll.value) + 13;
+           }
+         }
+       }
+   </SCRIPT>
+ </HEAD>
+
+ <BODY>
+   <CENTER> 
+     <H2>Vegas Dave's Online Slots</H2>
+
+     <IMG NAME="slot1" BORDER=1 SRC="Images/cherry.jpg">
+     <IMG NAME="slot2" BORDER=1 SRC="Images/lemon.jpg">
+     <IMG NAME="slot3" BORDER=1 SRC="Images/donut.jpg">
+
+     <BR><BR>
+
+     <FORM NAME="SlotForm">
+       <INPUT TYPE="button" VALUE="Click to Spin" ONCLICK="DoSpin();">
+       <BR><BR><BR>
+        Your current bankroll:  $
+        <INPUT TYPE="text" NAME="bankroll" SIZE=8 VALUE=20 ONFOCUS="blur();">
+        <BR><BR>
+        Your running debt:  $
+        <INPUT TYPE="text" NAME="debt" SIZE=8 VALUE=0 ONFOCUS="blur();">
+    </FORM>
+   </CENTER>
+ </BODY>
+ </HTML>

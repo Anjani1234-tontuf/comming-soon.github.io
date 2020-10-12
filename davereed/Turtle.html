@@ -1,0 +1,154 @@
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript" SRC="random.js">
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+    function distance() {
+        return Math.sqrt( Math.pow(getX(), 2) + Math.pow(getY(), 2) );
+    }
+
+    function home() {
+        document.TurtleApplet.home(); 
+        document.appletForm.turtleX.value = getX();
+        document.appletForm.turtleY.value = getY();
+        document.appletForm.turtleHead.value = getHeading();
+        document.appletForm.turtleDist.value = distance();
+        document.appletForm.squareDist.value =
+             Math.pow(document.appletForm.turtleDist.value, 2);
+    }
+
+    function clearScreen() {
+          document.TurtleApplet.clear();
+    }
+
+    function penUp() {
+        document.TurtleApplet.penUp(); 
+    } 
+
+    function penDown() {
+        document.TurtleApplet.penDown(); 
+   }
+                     
+    function turnTo(heading) {
+        document.TurtleApplet.turnTo(heading); 
+        document.appletForm.turtleHead.value = getHeading();
+    }
+
+    function moveTo(X,Y) { 
+        document.TurtleApplet.moveTo(X,Y); 
+        document.appletForm.turtleX.value = getX();
+        document.appletForm.turtleY.value = getY();
+        document.appletForm.turtleDist.value = distance();
+    }
+
+    function drawString(str) {
+        document.TurtleApplet.drawString(str); 
+    }
+     
+    function left(degrees) {
+        document.TurtleApplet.left(degrees); 
+        document.appletForm.turtleHead.value = getHeading();
+    }
+
+    function right(degrees) {
+        document.TurtleApplet.right(degrees); 
+        document.appletForm.turtleHead.value = getHeading();
+    }
+
+    function forward(steps) { 
+        document.TurtleApplet.forward(steps); 
+        document.appletForm.turtleX.value = getX();
+        document.appletForm.turtleY.value = getY();
+        document.appletForm.turtleDist.value = distance();
+        document.appletForm.squareDist.value =
+             Math.pow(document.appletForm.turtleDist.value, 2);
+    }
+     
+    function backward(steps) {                       
+        document.TurtleApplet.backward(steps);
+        document.appletForm.turtleX.value = getX();
+        document.appletForm.turtleY.value = getY(); 
+        document.appletForm.turtleDist.value = distance();
+        document.appletForm.squareDist.value = 
+             Math.pow(document.appletForm.turtleDist.value, 2);
+    }
+    
+    function getHeading() { 
+        return document.TurtleApplet.getHeading(); 
+    } 
+
+    function getX() {
+        return document.TurtleApplet.getX(); 
+    } 
+                  
+    function getY() {
+        return document.TurtleApplet.getY(); 
+    } 
+
+    function getPen() {
+        return document.TurtleApplet.getPen(); 
+    }
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="lightgrey">
+<CENTER>
+<FORM NAME="appletForm">
+<TABLE>
+<TR>
+<TD ALIGN="center"><TEXTAREA NAME="inputArea" ROWS=8 COLS=50></TEXTAREA></TD>
+<TD> &nbsp;&nbsp;&nbsp;
+<TD><U><H3> Turtle Graphics </H3></U>
+    <INPUT TYPE="button" NAME="evalButton" VALUE="Execute code" 
+     ONCLICK="if (document.appletForm.homeBox.checked) home();
+        for (i1x4 = 1; i1x4 <= parseInt(document.appletForm.numReps.value); i1x4=i1x4+1){
+            eval(document.appletForm.inputArea.value);
+        }">
+       <INPUT TYPE="text" NAME="numReps" VALUE=1 SIZE=4> time(s)
+       <BR>
+       <INPUT TYPE="checkbox" NAME="homeBox" CHECKED="yes"> Start each drawing at (0,0)
+       <BR><BR>
+       <INPUT TYPE="button" NAME="resetButton" VALUE="Reset graphics screen" 
+              ONCLICK= "home(); clearScreen();"> 
+</TD>
+</TR>
+<TR><TD COLSPAN=3><HR>
+<TR>
+<TD ALIGN="center">
+125<BR>
+-200
+<APPLET ALIGN="center" CODE="TurtleGraphics.class" NAME="TurtleApplet" WIDTH=400 HEIGHT=250>
+               <PARAM NAME="MAX_X" VALUE=200>
+               <PARAM NAME="MAX_Y" VALUE=125>
+              </APPLET>
+200<BR>
+-125
+<TD>
+<TD>
+<U><H3> Turtle Status</H3></U>
+heading: &nbsp;
+<INPUT TYPE="text" NAME="turtleHead" SIZE=3 VALUE=0><SUP>o</SUP>
+<BR><BR>
+location: &nbsp;
+(<INPUT TYPE="text" NAME="turtleX" SIZE=4 VALUE=0>,
+ <INPUT TYPE="text" NAME="turtleY" SIZE=4 VALUE=0>)
+<BR><BR><HR><BR>
+<TABLE>
+<TR><TD>distance from (0,0): 
+    <TD><INPUT TYPE="text" NAME="turtleDist" SIZE=8 VALUE=0>
+<TR><TD><BR>
+<TR><TD>distance<SUP>2</SUP> from (0,0): &nbsp;
+    <TD><INPUT TYPE="text" NAME="squareDist" SIZE=8 VALUE=0>
+</TABLE>
+
+</TABLE>
+</FORM>
+
+
+</CENTER>
+</BODY>
+
+
+
+
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="robots" content="index,follow">
+
+  <!-- Primary Meta Tags -->
+  <title>< Bill Gates Loves to Code /></title>
+  <meta name="title" content="< Bill Gates Loves to Code />">
+  <meta name="description" content="Bill Gates Code Meme maker created by Alex Leybourne and Nicolas Jensen">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alexleybourne.github.io/BillGatesMemeMaker/">
+  <meta property="og:title" content="< Bill Gates Loves to Code />">
+  <meta property="og:description" content="Bill Gates Code Meme maker created by Alex Leybourne and Nicolas Jensen">
+  <meta property="og:image" content="https://i.ibb.co/L0htR9x/Frame-1.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://alexleybourne.github.io/BillGatesMemeMaker/">
+  <meta property="twitter:title" content="< Bill Gates Loves to Code />">
+  <meta property="twitter:description" content="Bill Gates Code Meme maker created by Alex Leybourne and Nicolas Jensen">
+  <meta property="twitter:image" content="https://i.ibb.co/L0htR9x/Frame-1.jpg">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+  <link rel="manifest" href="./favicon/site.webmanifest">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div id="loadingScreen">
+    <img class="loading-bill" id="loadingBill" src="./images/Bill.png">
+  </div>
+  <div class="wrapper">
+    <div id="download-popup">
+      <div class="download-wrapper">
+        <img src="" alt="Bill Gates Meme Image" class="not-selectable" id="GeneratedImage">
+        <p id="holdToSaveImage">Hold to save the image</p>
+        <img src="./Icons/Delete.svg" onclick="closePopUp()" id="closeIcon">
+        <button onclick="downloadCanvas()" class="button-class download-button" id="imageDownloadButton"><img src="./Icons/Download.svg"> Download</button>
+      </div>
+    </div>
+    <span id="loadingUpdateWrapper">
+      <img id="updateLoadingBill" src="./images/Bill.png">
+      <div id="updateLoadingBG"></div>
+    </span>
+    <div id="title">
+      <h1>< Bill Gates Loves to Code /></h1>
+      <p id="chromeWarning">For the best results please use google chrome on desktop</p>
+      <span> <img src="./Icons/Twitter.svg"> Tweet your pics with <i>#loveToCode</i></span>
+      <p>Click the computer screen to get started !</p>
+    </div>
+    <div id="canvas-items">
+      <div id="helpBubbles">
+        <div class="help-bubble" id="bubble1">
+          <img src="./images/Bubble.svg">
+          <span class="help-text">Your favorite Coding Language</span>
+        </div>
+        <div class="help-bubble bubble-2" id="bubble2">
+          <img src="./images/Bubble.svg">
+          <span class="help-text text-2">Language you are learning or want to learn</span>
+        </div>
+        <div class="help-bubble bubble-3" id="bubble3">
+          <img src="./images/Bubble.svg">
+          <span class="help-text text-3">Your second favorite Coding Language</span>
+        </div>
+      </div>
+      <p id="wink-text">* wink *</p>
+      <img id="wink" src="./images/wink.png">
+        <div id="select-buttons">
+          <button onclick="selected('main')" id="main" class="main-screen-button select-button">Main Screen</button>
+          <button onclick="selected('secondary')" id="secondary" class="second-screen-button select-button">Second Screen</button>
+          <button onclick="selected('binder')" id="binder" class="binder-button select-button">Binder</button>
+        </div>
+      <div id="canvas-div">
+        <canvas id="canvas" width="1460" height="1080"></canvas>
+      </div>
+    </div>
+
+    <div id="controls">
+      <input style="display: none" type='file' name='img' accept="image/x-png,image/gif,image/jpeg" size='65' id='upload-main' />
+      <input style="display: none" type='file' name='img' accept="image/x-png,image/gif,image/jpeg" size='65' id='upload-secondary' />
+      <input style="display: none" type='file' name='img' accept="image/x-png,image/gif,image/jpeg" size='65' id='upload-binder' />
+      <button onclick="generate()" class="button-class"><img src="./Icons/Loading.svg"> Generate</button>
+      <button onclick="clearCanvas()" class="button-class"><img src="./Icons/Delete.svg"> Reset</button><br>
+      <button onclick="downloadTemplateImage()" class="button-class"><img src="./Icons/Image.svg"> Download Template Image</button>
+      <button onclick="help()" id="helpButton" class="button-class"><img src="./Icons/Help.svg"> Help</button>
+    </div>
+    <div id="credits">
+      <span>Tag <a href="https://twitter.com/alexleybourne" target="_blank">@AlexLeybourne</a> when you post on <img src="./Icons/Twitter.svg"> Twitter.</span>
+      <p>Created by  <a href="https://github.com/alexleybourne" target="_blank">Alex Leybourne</a> & <a href="https://github.com/NicolasJJensen" target="_blank">Nicolas Jensen</a> 2020.</p>
+      <span class="opacity-half">Built with Vanilla Javascript <img src="./Icons/JavascriptLogo.svg"> & HTML<img src="./Icons/HtmlLogo.svg"></span>
+    </div>
+  </div>
+  <script src="skew.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

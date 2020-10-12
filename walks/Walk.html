@@ -1,0 +1,89 @@
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript" SRC="random.js">
+</SCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="lightgrey" 
+      ONLOAD="document.TurtleApplet.penUp();
+              document.TurtleApplet.moveTo(0,0);
+              document.TurtleApplet.drawString('o');">
+<CENTER>
+<FORM NAME="appletForm">
+<TABLE>
+<TR>
+  <TD>Number of random walks: &nbsp;
+  <TD><INPUT TYPE="text" NAME="numWalks" SIZE=6 VALUE=1>
+  <TD COLSPAN=2 ROWSPAN=2><INPUT TYPE="button" NAME="evalButton" 
+       VALUE="Execute random walks" 
+       ONCLICK="
+       AAAstep = parseFloat(document.appletForm.stepSize.value);
+       for (iAQ4=1; iAQ4 <= parseFloat(document.appletForm.numWalks.value); iAQ4=iAQ4+1) {
+          XXX = 0;  YYY = 0;
+          for (i1x4=1; i1x4 <= parseFloat(document.appletForm.numSteps.value); i1x4=i1x4+1){
+            AAAangle = randomNum(0, 2*Math.PI);
+            XXX = XXX + AAAstep*Math.sin(AAAangle);
+            YYY = YYY + AAAstep*Math.cos(AAAangle);
+          }
+          document.TurtleApplet.moveTo(XXX,YYY);  
+          document.TurtleApplet.drawString('x');
+          AAAsquare = Math.pow(Math.sqrt( Math.pow(XXX, 2) + Math.pow(YYY, 2) ), 2);
+          AAAwalks = parseFloat(document.appletForm.walksSoFar.value);
+          AAAavg = parseFloat(document.appletForm.avgSquare.value);
+          document.appletForm.walksSoFar.value = AAAwalks+1;
+          document.appletForm.avgSquare.value = ((AAAwalks*AAAavg)+AAAsquare)/(AAAwalks+1);
+          document.appletForm.avgNormal.value = 
+              document.appletForm.avgSquare.value/Math.pow(AAAstep,2);
+       }">
+<TR>
+  <TD>Number of steps per walk: &nbsp;
+  <TD><INPUT TYPE="text" NAME="numSteps" SIZE=6 VALUE=100>
+<TR>
+  <TD>Size of each step: &nbsp;
+  <TD><INPUT TYPE="text" NAME="stepSize" SIZE=6 VALUE=1>
+  <TD COLSPAN=2 ROWSPAN=2><INPUT TYPE="button" NAME="resetButton" 
+              VALUE="Clear graphics and reset" 
+              ONCLICK= "document.TurtleApplet.clear();
+                        document.TurtleApplet.moveTo(0,0);
+                        document.TurtleApplet.drawString('o');
+                        document.appletForm.walksSoFar.value = 0;
+                        document.appletForm.avgSquare.value = 0;
+                        document.appletForm.avgNormal.value = 0;"> 
+<TR>
+  <TD>Expression for each turn: &nbsp;
+  <TD><INPUT TYPE="text" NAME="turnExpr" SIZE=35 VALUE="Math.floor(360*Math.random())">
+</TR>
+<TR><TD COLSPAN=4><HR>
+<TR>
+<TD COLSPAN=2 ALIGN="center">
+125<BR>
+-200
+<APPLET ALIGN="center" CODE="TurtleGraphics.class" NAME="TurtleApplet" WIDTH=400 HEIGHT=250>
+               <PARAM NAME="MAX_X" VALUE=200>
+               <PARAM NAME="MAX_Y" VALUE=125>
+              </APPLET>
+200  &nbsp;&nbsp;&nbsp;&nbsp;<BR>
+-125
+<TD>
+<TD>
+<U><H3> Random Walk Statistics</H3></U>
+<TABLE>
+<TR><TD>walks since last reset: &nbsp;
+    <TD><INPUT TYPE="text" NAME="walksSoFar" SIZE=8 VALUE=0>
+<TR><TD><BR>
+<TR><TD>average pixel distance<SUP>2</SUP>: &nbsp;
+    <TD><INPUT TYPE="text" NAME="avgSquare" SIZE=8 VALUE=0>
+<TR><TD>average step distance<SUP>2</SUP>: &nbsp;
+    <TD><INPUT TYPE="text" NAME="avgNormal" SIZE=8 VALUE=0>
+</TABLE>
+</TABLE>
+</FORM>
+
+
+</CENTER>
+</BODY>
+
+
+
+
+
