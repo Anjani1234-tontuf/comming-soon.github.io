@@ -1,0 +1,46 @@
+.hide-print {
+	display: none;
+}
+
+@page {
+	margin: 0;
+}
+
+#item-list {
+	margin-top: 50px;
+}
+
+.md-header {
+	display: none;
+}
+
+invoice-total {
+	position: relative;
+	top: 50px;
+	right: 0px;
+}
+
+invoice-total {
+	float: right;
+	min-height: 250px;
+}
+
+invoice-total span.pull-right {
+	margin-left: 50px;
+}
+
+.client {
+	margin-top: 150px;
+}
+
+#item-list thead tr {
+	border-bottom: 3px solid black;
+}
+
+#item-list tbody tr {
+	border-bottom: 2px solid #e1e1e1;
+}
+
+textarea {
+	border: none;
+}

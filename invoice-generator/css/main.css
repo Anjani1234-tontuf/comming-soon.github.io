@@ -1,0 +1,72 @@
+
+.ml	{ margin-left: 25px; }
+.mr	{ margin-right: 25px; }
+.mt	{ margin-top: 25px; }
+.mb	{ margin-bottom: 25px; }
+.pl	{ padding-left: 25px; }
+.pr	{ padding-right: 25px; }
+.pt	{ padding-top: 25px; }
+.pb	{ padding-bottom: 25px; }
+.m { margin: 15px; }
+.p { padding: 15px; }
+
+md-whiteframe {
+	margin-top: 20px;
+	margin-bottom: 20px;	
+}
+
+input[type=number] {
+	width: 100%;
+}
+
+md-input-container {
+	padding-bottom: 0px;
+}
+
+.options {
+	padding: 25px;
+}
+
+.md-tabs-content {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+p {
+	margin-bottom: 0px;
+}
+
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
+
+.table > thead > tr {
+	background-color: #9E9E9E;
+	color: white;
+}
+
+.table > thead > tr > th:first-child  { border-top-left-radius : 4px;  }
+.table > thead > tr > th:last-child { border-top-right-radius : 4px; }
+.table > tbody > tr:first-child > td:last-child { border-top-right-radius : 4px; }
+.table > tbody > tr:last-child > td:first-child { border-bottom-left-radius : 4px; }
+.table > tbody > tr:last-child > td:last-child { border-bottom-right-radius : 4px; }
+.table > tbody > tr:last-child { background-color : #f9f9f9; }
+
+h1, h2, h3, h4, h5 { font-weight: 300; }
+h2 { font-size: 30px; }
+
+div#item-list {
+	overflow: scroll;
+}
+
+.item-tva {
+	min-width: 50px;
+}
+
+.item-total {
+	min-width: 70px;
+}
+
+textarea {
+	margin-top: 35px;
+}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Générateur de factures</title>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+
+		<!-- Angulars Material CSS now available via Google CDN; version 0.8 used here -->
+    	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<!-- Angular Material Dependencies -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.js"></script>
+
+	    <!-- Angular Material Javascript now available via Google CDN; version 0.8 used here -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+
+	    <!-- ng-click to copy yo clipboard -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
+  		<script src="https://rawgit.com/asafdav/ng-clip/master/src/ngClip.js"></script>
+	    <script src="js/app.js"></script>
+	</head>
+	<body ng-app="invoice" ng-controller="invoiceCtrl">
+		<md-toolbar class="md-primary md-hue-2 hide-print">
+		    <div class="md-toolbar-tools">
+		     	<md-button class="md-default">
+		      		<i class="fa fa-coffee"></i> générateur de factures
+		    	</md-button>
+		    </div>
+		</md-toolbar>
+		<div class="container-fluid">
+			<div class="col-lg-8">
+			<md-whiteframe class="md-whiteframe-z1 content" layout="column">
+			<md-tabs md-dynamic-height md-border-bottom>
+			 	<md-tab label="apperçu">
+		        	<div class="col-lg-12">
+						<div class="col-xs-6">
+							<b>De</b>
+							<p>{{ seller.name }}</p>
+							<p>Siret : <md-button class="md-primary" clip-copy="seller.siret" ng-click="informClip(copy)">{{ seller.siret | siret }}</md-button></p>
+							<p>{{ seller.address }}</p>
+							<p>{{ seller.zipcode }}, {{ seller.city }} - {{ seller.country | uppercase }}</p>
+						</div>
+						<div class="col-xs-6 text-right">
+							<h1><em>{{ opt.type == true ? 'Facture' : 'Devis' }} N° {{ opt.number }}</em></h1>
+						</div>
+					</div>
+					<div class="col-lg-12 mt client">
+						<div class="col-lg-6">
+							<b>A</b>
+							<p>{{ client.name }}</p>
+							<p>{{ client.address }}</p>
+							<p>{{ client.zipcode }}, {{ client.city }} - {{ client.country | uppercase }}</p>
+						</div>
+						<div class="col-lg-6 text-right mt">
+							<p><strong>Date {{ opt.type == true ? 'de la facture' : 'du devis' }} : </strong>{{ formatDate(opt.startDate) }}</p>
+							<p><strong>Date d'échéance :</strong> {{ formatDate(opt.endDate) }}</p>
+						</div>
+					</div>
+					<div class="col-lg-12 mt" id="item-list">
+						<table class="table table-hover" >
+							<thead>
+								<tr>
+									<th class="col-lg-12">Description</th>
+									<th>Quantité</th>
+									<th>Unité</th>
+									<th class="item-tva">TVA</th>
+									<th class="item-total">Coût</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(idx, item) in items">
+									<td>{{ item.description }}</td>
+									<td>{{ item.quantity }}</td>
+									<td>{{ item.unit }} {{ opt.devise }}</td>
+									<td>{{ opt.tva }} %</td>
+									<td>{{ calcLine(item)}}</td>
+									<td>
+										<md-button class="md-primary md-warn hide-print" aria-label="Remove item" ng-click="removeItem(item)">
+											<i class="fa fa-times"></i> Del
+										</md-button>
+									</td>
+								</tr>
+								<tr class="addItem hide-print" >
+									<td>
+										<md-input-container flex>
+								         	<label>Description</label>
+								         	<input ng-model="newItem.description" >
+								        </md-input-container>
+									</td>
+									<td>
+										<md-input-container flex>
+								         	<label>Quantité</label>
+								         	<input type="number" ng-model="newItem.quantity" >
+								        </md-input-container>
+									</td>
+									<td>
+										<md-input-container flex>
+								         	<label>Unité</label>
+								         	<input type="number" ng-model="newItem.unit">
+								        </md-input-container>
+									</td>
+									<td>
+										{{ opt.tva }} %
+									</td>
+									<td>
+										{{ calcLine(newItem) }}
+									</td>
+									<td>
+										<md-button class="md-primary" ng-click="addItem(newItem)">
+											<i class="fa fa-plus"></i> Add
+										</md-button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-lg-12">
+						<invoice-total to-sum="items" options="opt"></invoice-total>
+					</div>
+					<div class="col-lg-12">
+						<textarea name="" id="" cols="100" rows="10"></textarea>
+					</div>
+		    	</md-tab>
+		    	<md-tab label="parties">
+		        <div class="col-sm-6">
+					<div>
+						<h2 class="text-center">Créancier</h2>
+						<md-content layout-padding layout="column" layout-sm="column" class="col-xs-6">
+						    <md-input-container class="col-xs-12">
+						    	<label>Dénomination</label>
+						    	<input ng-model="seller.name">
+						    </md-input-container>
+					  	</md-content>
+					  	<md-content layout-padding layout="column" layout-sm="column" class="col-xs-6">
+						    <md-input-container class="col-xs-12">
+						    	<label>N° de SIRET</label>
+						    	<input ng-model="seller.siret">
+						    </md-input-container>
+					  	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					 		<md-input-container flex class="col-xs-12">
+					        	<label>Adresse</label>
+					        	<input ng-model="seller.address">
+					      	</md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex class="col-xs-12">
+					         	<label>Ville</label>
+					         	<input ng-model="seller.city">
+					        </md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex>
+					          	<label>Code postal</label>
+					         	<input ng-model="seller.zipcode">
+					        </md-input-container>
+					 	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					 		<md-input-container flex>
+					         	<label>Pays</label>
+					         	<input ng-model="seller.country">
+					        </md-input-container>
+					 	</md-content>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div>
+						<h2 class="text-center">Destinataire</h2>
+						<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+						    <md-input-container class="col-xs-12">
+						    	<label>Dénomination</label>
+						    	<input ng-model="client.name">
+						    </md-input-container>
+					  	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					 		<md-input-container flex class="col-xs-12">
+					        	<label>Adresse</label>
+					        	<input ng-model="client.address">
+					      	</md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex class="col-xs-12">
+					         	<label>Ville</label>
+					         	<input ng-model="client.city">
+					        </md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex>
+					          	<label>Code postal</label>
+					         	<input ng-model="client.zipcode">
+					        </md-input-container>
+					 	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					 		<md-input-container flex>
+					         	<label>Pays</label>
+					         	<input ng-model="client.country">
+					        </md-input-container>
+					 	</md-content>
+					</div>
+				</div>
+		    	</md-tab>
+			</md-tabs>	
+				</md-whiteframe>
+			</div>
+			<div class="col-lg-4 hide-print">
+				<md-whiteframe class="md-whiteframe-z1 options" layout="column" layout-align="center center">
+					<h2>Options</h2>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-4">
+					        <span class="md-body-1">TVA (%)</span>
+					    </div>
+					    <div class="col-xs-5">
+					    	<md-slider flex min="0" max="25" ng-model="opt.tva" aria-label="blue" id="blue-slider" class="md-primary"></md-slider>
+					    </div>
+				      	<div flex layout class="col-xs-3">
+				        	<input type="number" ng-model="opt.tva" aria-label="blue" aria-controls="blue-slider">
+				      	</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+				    	<div class="col-xs-6">
+				    		Type de document :
+				    	</div>
+				    	<div class="col-xs-3">
+				    		<md-switch ng-model="opt.type" aria-label="Switch 1" class="md-primary"></md-switch>
+				    	</div>
+						<div class="col-xs-3">
+							{{ opt.type == true ? 'Facture' : 'Devis' }}
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12 mb">
+						<div class="col-xs-6">
+							Pièce numero # :
+						</div>
+						<div class="col-xs-6">
+							<md-input-container flex>
+				          		<label>Numero</label>
+				         		<input ng-model="opt.number">
+				        	</md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-5">
+							Date de début
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Début</label>
+					        	<input type="date" ng-change="debug()" ng-model="opt.startDate">
+					        </md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-5">
+							Date d'échéance
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Fin</label>
+					        	<input type="date" ng-model="opt.endDate">
+					        </md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12 mt">
+						<div class="col-xs-5">
+							Devise
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Devise</label>
+					        	<input maxlength="5" ng-model="opt.devise">
+					        </md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-5">
+							Déjà payé
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Payé</label>
+					        	<input type="number" ng-model="opt.paid">
+					        </md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12 mt">
+						<md-button class="md-primary md-hue-2 p" ng-click="print()"><i class="fa fa-print pr"></i> Imprimer</md-button>
+					</div>
+				</md-whiteframe>
+			</div>
+		</div>
+	</body>
+</html>
