@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script src="javascript.js"></script>
+<style>
+h1{
+text-align:center;
+}
+.box{ background-color:#D3D3D3;
+width:20vw;
+border:2px solid black;
+box-shadow:2px 2px solid red;
+border-radius:15px;
+margin:10px  auto;
+padding:20px;
+}
+  @media only screen and (max-width: 992px) {
+    .box{
+      height:30%;
+    }
+  }
+   @media only screen and (min-width: 992px) {
+    .box{
+      height:60%;
+    }
+  }
+</style>
+</head>
+<body>
+<h1>Random Equation Generator</h1>
+<div class="box">
+
+Select the level
+<p><input type="radio" id="level" name="r" value="1" checked onclick="randomequation()">Easy<br>
+<input type="radio" id="level1" name="r" value="2" onclick="randomequation()">Medium<br>
+<input type="radio" id="level2" name="r" value="3" onclick="randomequation()">Hard</p>
+
+<p id="generate"></p>
+<p id="answer"></p>
+<p id="buton"></p>
+<button id="next" onclick="next()">Next</button>
+</div>
+
+</body>
+</html>

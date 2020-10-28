@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <title>K-pop Random Dance Generator</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/normalize-css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+  </head>
+  <body>
+
+    <!-- YouTube video player -->
+    <div id="player"></div>
+
+    <!-- countdown audio player -->
+    <audio id="audio" src="media/countdown.mp3"></audio>
+
+    <!-- settings panel -->
+    <div id="settings">
+      <div class="setting">
+        <input id="countdown" type="checkbox" checked="checked" />
+        <label for="countdown">Countdown</label>
+      </div>
+      <div class="setting">
+        <input id="dp" type="checkbox" />
+        <label for="dp">Dance Practice</label>
+      </div>
+      <div class="setting">
+        <label for="padding">Padding time (seconds)</label>
+        <select id="padding">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected="selected">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="lib/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+
+  </body>
+</html>

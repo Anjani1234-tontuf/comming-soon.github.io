@@ -1,0 +1,57 @@
+<html>
+    <head>
+      <meta charset="utf-8"/>
+      <script src="zalgo_fader.js" charset="UTF-8"></script>
+      <style>
+        .outputs {line-height: 2em; overflow: visible; height: 7em; width: 98%; vertical-align: middle; font-size: 20pt;  font-family: Times New Roman; border: 1px solid black;}
+        #output_html{overflow: scroll; height: 6em; width: 98%; border: 1px solid black;}
+      </style>
+    </head>
+    <body>
+      <noscript>Please enable client-side scripting to generate your text!</noscript>
+      <table>
+      <tr>
+          <form>
+            <BR>
+            
+            <font>Text:</font><br>
+            <textarea type="text" id="iText" name="iText" rows="5" cols="50" value="As one great Furnace flamd, yet from those flames. No light, but rather darkness visible.">As one great Furnace flamd, yet from those flames. No light, but rather darkness visible.</textarea>
+            <br>
+            <P>
+            Color 1: <input type="color" id="color1" name="color1" value="#ffff00"><br>
+            Color 2: <input type="color" id="color2" name="color2" value="#ff0000"><br>
+            Enable custom clean text color: <input type="checkbox" id="colormid" name="colormid" value="custom_middle_color"> <input type="color" id="custom_middle_color_value" name="custom_middle_color_value" value="#000000">
+            </P>
+            <P>Level of distortion:<br>
+            <input type="radio" name="level" id="zalgo_opt_mini" value="zalgo_opt_mini" checked> Mini<br>
+            <input type="radio" name="level" id="zalgo_opt_normal" value="zalgo_opt_normal"> Normal<br>
+            <input type="radio" name="level" id="zalgo_opt_maxi" value="zalgo_opt_maxi"> Maximum<br>
+            </P><P>
+            Turn on/off directions of zalgo:<br>
+            <input type="checkbox" name="zalgo_direction" id="up_opt" value="up_opt" checked> Go up<br>
+            <input type="checkbox" name="zalgo_direction" id="mid_opt" value="mid_opt" checked> Do middle<br>
+            <input type="checkbox" name="zalgo_direction" id="down_opt" value="down_opt" checked> Go down<br>
+            </P>
+            <P>Color fade direction<br>
+            <input type="radio" name="fade_type" id="horizontal_fade" value="horizontal_fade" checked> Horizontal color<br>
+            <input type="radio" name="fade_type" id="vertical_fade" value="vertical_fade"> Vertical fade<br>
+            </P> 
+            <button type="button" onclick="he_comes()">HE COMES!</button>
+            <br>
+          </form>
+      </tr>
+
+      <tr>
+        <br>
+        <font>Uncolorized zalgo output:</font><br>
+        <p id="output_zalgo" class="outputs"></p><br>
+        <font>Colorized zalgo output: <input type="color" id="custom_background_display" name="custom_background_display" value="#000000"> <button type="button" onclick="custom_background_display()"> (Click for custom background) </button></font><br>
+        <div id="output_colorized" class="outputs"></div><br>
+        <font>HTML code:</font><br>
+        <textarea id="output_html"></textarea><br>
+      </tr>
+        </table>
+    </body>
+
+</html>
+

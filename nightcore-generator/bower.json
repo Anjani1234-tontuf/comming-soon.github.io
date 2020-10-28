@@ -1,0 +1,13 @@
+{
+  "name": "nightcore generator",
+  "authors": [
+    "Ralph Dreijer"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "http://www.ralphdreijer.nl/",
+  "dependencies": {
+    "p5.js": "p5js#^0.5.1"
+  }
+}

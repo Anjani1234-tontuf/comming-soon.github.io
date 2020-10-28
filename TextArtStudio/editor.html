@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="Text Art Creator">
+    <meta name="description" content="Draw the Text Art that you want with an easy to use editor">
+    <meta name="keywords" content="Art, Text, Studio, Paint, Create, Draw, Save, HackTUES, Creativity, Copy">
+    <meta name="author" content="Team //input name here">
+    <title>Type Art Studio - Editor</title>
+    <link rel="stylesheet" href="stylesheet.css" rel="stylesheet">
+    <link rel="shortcut icon" href="./img/logo_50x50.png">
+    <script src="scripts/jquery-3.2.0.min.js"></script>
+</head>
+
+<body>
+    <header class="top-header">
+        <div class="header-logo">
+            <img src="img/logo_nobckgrnd_100x100.png" alt="Type Art Studio's Logo" height="40" width="40">
+            <em>Text Art Studio</em>
+        </div>
+        <nav class="header-nav">
+            <span class="nav-editor">
+					<button class="nav-button" type="button">
+						<a href="editor.html">
+							<img src="./img/logo_nobckgrnd_100x100.png" alt="Editor Tab" height="30" width="30">
+							<em>Editor</em>
+						</a>
+					</button>
+				</span>
+            <span class="nav-help">
+					<button class="nav-button" type="button">
+						<a href="help.html">
+							<img src="./img/logo_nobckgrnd_100x100.png" alt="Help Tab" height="30" width="30">
+							<em>Help</em>
+						</a>
+					</button>
+				</span>
+        </nav>
+    </header>
+    <article>
+        <section class="page-title">
+            <h1>
+                <img src=".img/logo_50x50.png" alt="Editor Logo" height="50" width="50">
+                <em>Editor</em>
+            </h1>
+        </section>
+        <!-- Start Left Panel -->
+        <section class="left-panel">
+            <!-- Start Editor Control Panel -->
+            <div class="editor-settings">
+                <div class="editor-settings-select">
+                    <div class="tool-select">
+                        <div class="tool-pencil">
+                            <button id="usePencil">
+									<img src="img/logo_nobckgrnd_100x100.png" alt="Editor Pencil Tool" height="40" width="40">
+								</button>
+                        </div>
+                        <!--<div class="tool-line">
+								<button id="useLine">
+									<img src=".img/line_tmbnl_50x50" alt="Editor Line Tool" height="30" width="30">
+								</button>
+							</div>
+							<div class="tool-retangle">
+								<button id="useRetangle">
+									<img src=".img/retangle_tmbnl_50x50" alt="Editor Retangle Tool" height="30" width="30">
+								</button>
+							</div>-->
+                        <div class="tool-bucket">
+                            <button id="useBucket">
+									<img src=".img/logo_50x50.png" alt="Editor Bucket Tool" height="40" width="40">
+								</button>
+                        </div>
+                        <!--<div class="tool-settings">
+								<button id="useSettings">
+									<img src=".img/settings_tmbnl_50x50" alt="Editor Settings" height="40" width="40">
+								</button>
+							</div>-->
+                    </div>
+                </div>
+            </div>
+            <!-- End Editor Control Panel -->
+            <div class="tool-settings">
+                <input class="pencil-button" type="button" value="."></input>
+                <input class="pencil-button" type="button" value="/"></input>
+                <input class="pencil-button" type="button" value="\"></input>
+                <input class="pencil-button" type="button" value="="></input>
+                <br>
+                <input class="pencil-button" type="button" value="-"></input>
+                <input class="pencil-button" type="button" value="+"></input>
+                <input class="pencil-button" type="button" value="o"></input>
+                <input class="pencil-button" type="button" value="#"></input>
+                <br>
+                <form id="pencil-form" method="post">
+                    <em>Custom: </em><input type="text" name="symbol" size="1" maxlength="1"><br>
+                    <input class="pencil-button" type="submit" value="↳">
+                </form>
+            </div>
+            <!-- Start Editor Output Controls -->
+            <!--<div class="editor-controls">
+					<button id="copy">
+						<img src=".simg/copy_tmbnl_50x50" alt="Copy" height="50" width="50">
+						<em>Copy</em>
+					</button>
+				</div>-->
+            <!-- End Editor Output Controls -->
+        </section>
+        <!-- End Left Panel Section -->
+        <!-- Start Main  -->
+        <section class="left-panel">
+            <div class="editor-main">
+                <div>
+                    <table id="editor-table">
+                        <tr>
+                        </tr>
+                    </table>
+                </div>
+                <div class="textarea-export">
+                    <textarea id="copy-textarea" readonly rows="20" cols="20">
+						</textarea>
+                </div>
+            </div>
+        </section>
+    </article>
+    <!-- Start of Footer Section, containing aditional info and links -->
+    <!--<footer class="bottom-footer">
+			<div class="footer-info">
+				<span class="footer-logo">
+					<img src="" alt="Team \"Enter Name Here\"" height="50" width="50">
+				</span>
+				<span class="footer-teamname">
+					<p>Text Art Studio</p>
+					<p>Made By Team //Enter Name</p>
+				</span>
+			</div>
+			<div class="footer-links">
+				<a href="./about.html">About</a><br>
+				<a href="./help.html">Get Help</a>
+			</div>
+		</footer>-->
+    <!-- End of Footer Section -->
+    <script src="table_generator.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/unselectable-objects.js"></script>
+</body>
+
+</html>

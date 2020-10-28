@@ -1,0 +1,353 @@
+<html>
+  <head>
+    <script src="./vue-2.5.16.min.js" type="text/javascript"></script>
+    <style>td input { width: 80px; }</style>
+  </head>
+  <body>
+    <div id="app">
+      <table border=1>
+        <tr v-for="row, rowIx in layout">
+          <td v-for="ch, colIx in row">
+            <div><input type="text" v-model="layout[rowIx][colIx]"></div>
+            <div>p {{ (penalty.details[ch] || defaultPenalty).penalty.toString().substring(0, 5) }}</div>
+            <div>f {{ (penalty.details[ch] || defaultPenalty).frequency.toString().substring(0, 5) }}</div>
+            <div>{{ (penalty.details[ch] || defaultPenalty).weightedPenalty.toString().substring(0, 5) }}</div>
+          </td>
+        </tr>
+      </table>
+      打ちにくさ {{ penalty.penalty }}
+    </div>
+  </body>
+</html>
+
+<script>
+/* layout scorer */
+
+var positionPenalties = [
+    /* rowId -> columnId -> penalty */
+    [ 4, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 4 ],
+    [ 2, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2 ],
+    [ 3, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 3 ]
+];
+
+var sameColPenalty    = 2;
+var sameFingerPenalty = 1;
+var sameHandPenalty   = 0;
+
+var columnFinger = [
+    /* columnId -> finger */
+    { hand: 0, finger: 4 },
+    { hand: 0, finger: 4 },
+    { hand: 0, finger: 3 },
+    { hand: 0, finger: 2 },
+    { hand: 0, finger: 1 },
+    { hand: 0, finger: 1 },
+    { hand: 1, finger: 1 },
+    { hand: 1, finger: 1 },
+    { hand: 1, finger: 2 },
+    { hand: 1, finger: 3 },
+    { hand: 1, finger: 4 },
+    { hand: 1, finger: 4 },
+];
+
+/* the raw data came from http://norvig.com/mayzner.html */
+var letterFrequency = {
+    /* letter -> freqObj */
+    a: {
+        freq: 0.0804,
+        nextFreq: {
+            a: 0.000, b: 0.024, c: 0.048, d: 0.039, e: 0.001, f: 0.008, g: 0.022, h: 0.001, i: 0.034,
+            j: 0.001, k: 0.011, l: 0.115, m: 0.030, n: 0.211, o: 0.001, p: 0.022, q: 0.000, r: 0.114,
+            s: 0.092, t: 0.158, u: 0.013, v: 0.022, w: 0.006, x: 0.002, y: 0.023, z: 0.001
+        }
+    },
+    b: {
+        freq: 0.0148,
+        nextFreq: {
+            a: 0.079, b: 0.006, c: 0.001, d: 0.001, e: 0.313, f: 0.000, g: 0.000, h: 0.001, i: 0.058,
+            j: 0.012, k: 0.000, l: 0.126, m: 0.002, n: 0.001, o: 0.106, p: 0.001, q: 0.000, r: 0.061,
+            s: 0.025, t: 0.009, u: 0.100, v: 0.002, w: 0.000, x: 0.000, y: 0.096, z: 0.000
+        }
+    },
+    c: {
+        freq: 0.0334,
+        nextFreq: {
+            a: 0.132, b: 0.000, c: 0.020, d: 0.000, e: 0.160, f: 0.000, g: 0.000, h: 0.147, i: 0.069,
+            j: 0.000, k: 0.029, l: 0.037, m: 0.001, n: 0.000, o: 0.195, p: 0.000, q: 0.001, r: 0.037,
+            s: 0.006, t: 0.113, u: 0.040, v: 0.000, w: 0.000, x: 0.000, y: 0.010, z: 0.000
+        }
+    },
+    d: {
+        freq: 0.0382,
+        nextFreq: {
+            a: 0.069, b: 0.001, c: 0.001, d: 0.020, e: 0.349, f: 0.001, g: 0.014, h: 0.002, i: 0.225,
+            j: 0.002, k: 0.000, l: 0.015, m: 0.008, n: 0.004, o: 0.086, p: 0.001, q: 0.000, r: 0.039,
+            s: 0.058, t: 0.001, u: 0.068, v: 0.009, w: 0.004, x: 0.000, y: 0.023, z: 0.000
+        }
+    },
+    e: {
+        freq: 0.1249,
+        nextFreq: {
+            a: 0.066, b: 0.003, c: 0.046, d: 0.111, e: 0.036, f: 0.016, g: 0.011, h: 0.002, i: 0.017,
+            j: 0.000, k: 0.002, l: 0.051, m: 0.036, n: 0.139, o: 0.007, p: 0.016, q: 0.005, r: 0.195,
+            s: 0.128, t: 0.039, u: 0.003, v: 0.024, w: 0.011, x: 0.020, y: 0.014, z: 0.000
+        }
+    },
+    f: {
+        freq: 0.0240,
+        nextFreq: {
+            a: 0.091, b: 0.000, c: 0.001, d: 0.000, e: 0.132, f: 0.081, g: 0.001, h: 0.000, i: 0.159,
+            j: 0.000, k: 0.000, l: 0.036, m: 0.001, n: 0.000, o: 0.272, p: 0.000, q: 0.000, r: 0.119,
+            s: 0.003, t: 0.046, u: 0.054, v: 0.000, w: 0.000, x: 0.000, y: 0.005, z: 0.000
+        }
+    },
+    g: {
+        freq: 0.0187,
+        nextFreq: {
+            a: 0.093, b: 0.000, c: 0.000, d: 0.002, e: 0.243, f: 0.001, g: 0.016, h: 0.144, i: 0.096,
+            j: 0.000, k: 0.000, l: 0.038, m: 0.006, n: 0.042, o: 0.083, p: 0.000, q: 0.000, r: 0.124,
+            s: 0.032, t: 0.009, u: 0.054, v: 0.000, w: 0.001, x: 0.000, y: 0.016, z: 0.000
+        }
+    },
+    h: {
+        freq: 0.0505,
+        nextFreq: {
+            a: 0.163, b: 0.001, c: 0.000, d: 0.001, e: 0.542, f: 0.000, g: 0.000, h: 0.000, i: 0.135,
+            j: 0.000, k: 0.000, l: 0.002, m: 0.002, n: 0.005, o: 0.086, p: 0.000, q: 0.000, r: 0.015,
+            s: 0.003, t: 0.023, u: 0.013, v: 0.000, w: 0.001, x: 0.000, y: 0.009, z: 0.000
+        }
+    },
+    i: {
+        freq: 0.0757,
+        nextFreq: {
+            a: 0.031, b: 0.011, c: 0.075, d: 0.032, e: 0.041, f: 0.022, g: 0.027, h: 0.000, i: 0.002,
+            j: 0.000, k: 0.005, l: 0.046, m: 0.034, n: 0.260, o: 0.089, p: 0.010, q: 0.001, r: 0.034,
+            s: 0.120, t: 0.120, u: 0.002, v: 0.031, w: 0.000, x: 0.002, y: 0.000, z: 0.007
+        }
+    },
+    j: {
+        freq: 0.0016,
+        nextFreq: {
+            a: 0.134, b: 0.000, c: 0.000, d: 0.000, e: 0.268, f: 0.000, g: 0.000, h: 0.000, i: 0.015,
+            j: 0.000, k: 0.000, l: 0.000, m: 0.000, n: 0.000, o: 0.278, p: 0.000, q: 0.000, r: 0.000,
+            s: 0.000, t: 0.000, u: 0.304, v: 0.000, w: 0.000, x: 0.000, y: 0.000, z: 0.000
+        }
+    },
+    k: {
+        freq: 0.0054,
+        nextFreq: {
+            a: 0.036, b: 0.002, c: 0.000, d: 0.002, e: 0.452, f: 0.004, g: 0.006, h: 0.006, i: 0.207,
+            j: 0.000, k: 0.000, l: 0.023, m: 0.004, n: 0.108, o: 0.013, p: 0.002, q: 0.000, r: 0.006,
+            s: 0.101, t: 0.002, u: 0.006, v: 0.000, w: 0.004, x: 0.000, y: 0.013, z: 0.000
+        }
+    },
+    l: {
+        freq: 0.0407,
+        nextFreq: {
+            a: 0.125, b: 0.002, c: 0.003, d: 0.060, e: 0.196, f: 0.013, g: 0.001, h: 0.000, i: 0.148,
+            j: 0.000, k: 0.005, l: 0.136, m: 0.005, n: 0.001, o: 0.091, p: 0.004, q: 0.000, r: 0.002,
+            s: 0.034, t: 0.029, u: 0.032, v: 0.008, w: 0.003, x: 0.000, y: 0.100, z: 0.000
+        }
+    },
+    m: {
+        freq: 0.0251,
+        nextFreq: {
+            a: 0.206, b: 0.033, c: 0.001, d: 0.000, e: 0.290, f: 0.001, g: 0.000, h: 0.000, i: 0.116,
+            j: 0.000, k: 0.000, l: 0.002, m: 0.035, n: 0.003, o: 0.123, p: 0.087, q: 0.000, r: 0.001,
+            s: 0.034, t: 0.000, u: 0.042, v: 0.000, w: 0.000, x: 0.000, y: 0.023, z: 0.000
+        }
+    },
+    n: {
+        freq: 0.0723,
+        nextFreq: {
+            a: 0.052, b: 0.001, c: 0.062, d: 0.202, e: 0.103, f: 0.010, g: 0.143, h: 0.002, i: 0.051,
+            j: 0.002, k: 0.008, l: 0.010, m: 0.004, n: 0.011, o: 0.070, p: 0.001, q: 0.001, r: 0.001,
+            s: 0.076, t: 0.156, u: 0.012, v: 0.008, w: 0.001, x: 0.000, y: 0.015, z: 0.001
+        }
+    },
+    o: {
+        freq: 0.0764,
+        nextFreq: {
+            a: 0.007, b: 0.011, c: 0.019, d: 0.023, e: 0.005, f: 0.137, g: 0.011, h: 0.002, i: 0.010,
+            j: 0.001, k: 0.007, l: 0.043, m: 0.064, n: 0.206, o: 0.025, p: 0.026, q: 0.000, r: 0.149,
+            s: 0.034, t: 0.052, u: 0.102, v: 0.021, w: 0.039, x: 0.002, y: 0.004, z: 0.000
+        }
+    },
+    p: {
+        freq: 0.0214,
+        nextFreq: {
+            a: 0.127, b: 0.000, c: 0.000, d: 0.000, e: 0.187, f: 0.000, g: 0.000, h: 0.037, i: 0.048,
+            j: 0.000, k: 0.000, l: 0.103, m: 0.006, n: 0.000, o: 0.141, p: 0.054, q: 0.000, r: 0.186,
+            s: 0.022, t: 0.041, u: 0.041, v: 0.000, w: 0.000, x: 0.000, y: 0.005, z: 0.000
+        }
+    },
+    q: {
+        freq: 0.0012,
+        nextFreq: {
+            a: 0.000, b: 0.000, c: 0.000, d: 0.000, e: 0.000, f: 0.000, g: 0.000, h: 0.000, i: 0.000,
+            j: 0.000, k: 0.000, l: 0.000, m: 0.000, n: 0.000, o: 0.000, p: 0.000, q: 0.000, r: 0.000,
+            s: 0.000, t: 0.000, u: 1.000, v: 0.000, w: 0.000, x: 0.000, y: 0.000, z: 0.000
+        }
+    },
+    r: {
+        freq: 0.0628,
+        nextFreq: {
+            a: 0.108, b: 0.004, c: 0.019, d: 0.030, e: 0.291, f: 0.005, g: 0.016, h: 0.002, i: 0.114,
+            j: 0.000, k: 0.015, l: 0.013, m: 0.027, n: 0.025, o: 0.114, p: 0.007, q: 0.000, r: 0.019,
+            s: 0.062, t: 0.057, u: 0.020, v: 0.011, w: 0.002, x: 0.000, y: 0.039, z: 0.000
+        }
+    },
+    s: {
+        freq: 0.0651,
+        nextFreq: {
+            a: 0.045, b: 0.002, c: 0.032, d: 0.001, e: 0.193, f: 0.004, g: 0.000, h: 0.065, i: 0.114,
+            j: 0.000, k: 0.008, l: 0.012, m: 0.013, n: 0.002, o: 0.083, p: 0.040, q: 0.001, r: 0.001,
+            s: 0.084, t: 0.218, u: 0.064, v: 0.000, w: 0.005, x: 0.000, y: 0.012, z: 0.000
+        }
+    },
+    t: {
+        freq: 0.0928,
+        nextFreq: {
+            a: 0.057, b: 0.000, c: 0.003, d: 0.000, e: 0.129, f: 0.001, g: 0.000, h: 0.380, i: 0.144,
+            j: 0.000, k: 0.000, l: 0.010, m: 0.003, n: 0.001, o: 0.111, p: 0.000, q: 0.000, r: 0.046,
+            s: 0.036, t: 0.018, u: 0.027, v: 0.000, w: 0.009, x: 0.000, y: 0.024, z: 0.000
+        }
+    },
+    u: {
+        freq: 0.0273,
+        nextFreq: {
+            a: 0.041, b: 0.027, c: 0.056, d: 0.027, e: 0.044, f: 0.006, g: 0.038, h: 0.000, i: 0.030,
+            j: 0.000, k: 0.001, l: 0.103, m: 0.041, n: 0.118, o: 0.003, p: 0.041, q: 0.000, r: 0.162,
+            s: 0.136, t: 0.121, u: 0.000, v: 0.001, w: 0.000, x: 0.001, y: 0.001, z: 0.001
+        }
+    },
+    v: {
+        freq: 0.0105,
+        nextFreq: {
+            a: 0.106, b: 0.000, c: 0.000, d: 0.000, e: 0.627, f: 0.000, g: 0.000, h: 0.000, i: 0.205,
+            j: 0.000, k: 0.000, l: 0.000, m: 0.000, n: 0.000, o: 0.054, p: 0.000, q: 0.000, r: 0.001,
+            s: 0.001, t: 0.000, u: 0.002, v: 0.000, w: 0.000, x: 0.000, y: 0.004, z: 0.000
+        }
+    },
+    w: {
+        freq: 0.0168,
+        nextFreq: {
+            a: 0.202, b: 0.001, c: 0.001, d: 0.002, e: 0.190, f: 0.001, g: 0.000, h: 0.199, i: 0.197,
+            j: 0.000, k: 0.001, l: 0.008, m: 0.001, n: 0.042, o: 0.117, p: 0.001, q: 0.000, r: 0.016,
+            s: 0.018, t: 0.004, u: 0.001, v: 0.000, w: 0.000, x: 0.000, y: 0.001, z: 0.000
+        }
+    },
+    x: {
+        freq: 0.0023,
+        nextFreq: {
+            a: 0.118, b: 0.000, c: 0.102, d: 0.000, e: 0.087, f: 0.008, g: 0.000, h: 0.016, i: 0.154,
+            j: 0.000, k: 0.000, l: 0.004, m: 0.000, n: 0.000, o: 0.012, p: 0.264, q: 0.000, r: 0.000,
+            s: 0.000, t: 0.185, u: 0.020, v: 0.008, w: 0.000, x: 0.012, y: 0.012, z: 0.000
+        }
+    },
+    y: {
+        freq: 0.0166,
+        nextFreq: {
+            a: 0.031, b: 0.008, c: 0.027, d: 0.013, e: 0.178, f: 0.002, g: 0.006, h: 0.002, i: 0.055,
+            j: 0.000, k: 0.000, l: 0.029, m: 0.046, n: 0.025, o: 0.287, p: 0.048, q: 0.000, r: 0.015,
+            s: 0.185, t: 0.033, u: 0.002, v: 0.000, w: 0.006, x: 0.000, y: 0.000, z: 0.004
+        }
+    },
+    z: {
+        freq: 0.0009,
+        nextFreq: {
+            a: 0.243, b: 0.000, c: 0.000, d: 0.000, e: 0.485, f: 0.000, g: 0.000, h: 0.010, i: 0.117,
+            j: 0.000, k: 0.000, l: 0.010, m: 0.000, n: 0.000, o: 0.068, p: 0.000, q: 0.000, r: 0.000,
+            s: 0.000, t: 0.000, u: 0.019, v: 0.000, w: 0.000, x: 0.000, y: 0.019, z: 0.029
+        }
+    },
+};
+
+function computePenalty (layout) {
+    var layoutMap = {}; /* Char -> Array[(Row, Col)] */
+    layout.forEach(function (row, rowIx) {
+        row.forEach(function (ch, colIx) {
+            if (layoutMap[ch]) layoutMap[ch].push([rowIx, colIx]);
+            else layoutMap[ch] = [[rowIx, colIx]];
+        });
+    });
+    var penalty = 0;
+    var penaltyMap = {};
+    Object.keys(letterFrequency).forEach(function (ch) {
+        var letterPenalty = Object.keys(letterFrequency[ch].nextFreq).map(function (ch2) {
+            var freq = letterFrequency[ch].nextFreq[ch2];
+            return freq * Math.min.apply(null, (layoutMap[ch] || []).map(function (pos) {
+                return Math.min.apply(null, (layoutMap[ch2] || []).map(function (pos2) {
+                    var finger1 = columnFinger[pos[1]];
+                    var finger2 = columnFinger[pos2[1]];
+                    return finger1.hand != finger2.hand ? 0 :
+                           finger1.finger != finger2.finger ? sameHandPenalty :
+                           pos[1] != pos2[1] ? sameFingerPenalty :
+                           sameColPenalty;
+                })) + positionPenalties[pos[0]][pos[1]];
+            }));
+        }).reduce(function (x, y) {
+            return x + y;
+        });
+        penaltyMap[ch] = {
+            char: ch,
+            penalty: letterPenalty,
+            frequency: letterFrequency[ch].freq,
+            weightedPenalty: letterFrequency[ch].freq * letterPenalty
+        };
+        penalty += penaltyMap[ch].weightedPenalty;
+    });
+    return { penalty: penalty, details: penaltyMap };
+}
+
+/* GA engine */
+
+var swapPenalty = 0.1;
+
+var layout = [
+    /* row -> col -> letter */
+    ["", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", ""],
+    ["", "a", "s", "d", "f", "g", "h", "j", "k", "l", "",  ""],
+    ["", "z", "x", "c", "v", "b", "b", "n", "m", "",  "",  ""]
+];
+
+function random (lim) {
+    var base = 1.0 / lim;
+    return Math.random(lim);
+}
+
+function generateRandomChild (layout) {
+}
+
+/* Interactive designer */
+
+var vm = new Vue ({
+    el: "#app",
+    data: {
+        layout: [
+            /* row -> col -> letter */
+            ["", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", ""],
+            ["", "a", "s", "d", "f", "g", "h", "j", "k", "l", "",  ""],
+            ["", "z", "x", "c", "v", "b", "b", "n", "m", "",  "",  ""]
+        ],
+        defaultPenalty: {
+            penalty: 0,
+            frequency: 0,
+            weightedPenalty: 0
+        }
+    },
+    computed: {
+        penalty: function () {
+            return computePenalty(this.layout);
+        }
+    },
+    filter: {
+        formatNumber: function (x) {
+            console.log(x);
+            return x.toString().substring(0, 5);
+        },
+        toColor: function (val, lim) {
+        }
+    }
+});
+</script>

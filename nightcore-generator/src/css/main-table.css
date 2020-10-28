@@ -1,0 +1,13 @@
+td.main{
+    width: 50%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+td.side{
+    width: 25%;
+}
+
+table#main{
+    width: 100%;
+}

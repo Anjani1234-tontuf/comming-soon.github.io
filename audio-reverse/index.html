@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<body>
+<p>WebAudioAPI playbackRate: <input type="text" id="rate" size="3" value="0.7"/></p>
+<input type="file" onchange="handleFile(this.files)">
+<button onclick="play(false)">audio play</button>
+<button onclick="play(true)">reverse audio play</button>
+<script>
+const context = new AudioContext();
+const fileReader = new FileReader();
+let buffer = null;
+fileReader.onload = () => {
+  context.decodeAudioData(fileReader.result, (b) => buffer = b);
+}
+const handleFile = ([file]) => fileReader.readAsArrayBuffer(file);
+let reversed = false;
+const play = (reverse) => {
+  if (buffer === null) return;
+  if (reverse !== reversed) {
+    for (let i=0;i<buffer.numberOfChannels;i++) {
+      buffer.getChannelData(i).reverse();
+    }
+    reversed = !reversed;
+  }
+  const source = context.createBufferSource();
+  source.buffer = buffer;
+  source.playbackRate.value = ((r) => 0 < r ? r : 1)(parseFloat(document.getElementById('rate').value));
+  source.connect(context.destination);
+  source.onended = () => source.stop(0);
+  source.start(0);
+};
+</script>

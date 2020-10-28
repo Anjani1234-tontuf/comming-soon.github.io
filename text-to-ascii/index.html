@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<title>Text to ASCII Art Generator</title>
+	<meta name='viewport' content='width=device-width, initial-scale=.5, maximum-scale=.5'>
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+	<body>
+		<h1>Text to ASCII Art Generator</h1>
+		<br>
+		<input type="text" id="users-input" placeholder="Enter your text..." value="">
+		<br>
+		<br>
+		<button id="enter" onclick="genAssicArt()">Generatate ACSII Art</button>
+		<button id="copy" onclick="CopyToClipboard('ascii-art-text')">Copy ACSII Art</button>
+		<br>
+		<p class="ascii-art" id="ascii-art-text">
+		#....#........#......#....................#....#...............#..........#..<br>
+		#....#..###...#......#.......###..........#....#..###....###...#..........#..<br>
+		######.#...#..#......#......#...#.........#....#.#...#..#......#.......####..<br>
+		#....#.####...#......#......#...#.........#....#.#...#..#......#......#...#..<br>
+		#....#.#......#......#......#...#.........#.##.#.#...#..#......#......#...#..<br>
+		#....#..####...##.....##.....###...........#..#...###...#.......##.....####..<br>
+		.............................................................................
+		</p>
+		
+		<button onclick="window.open('http://www.jaredwines.com/', '_blank');">www.jaredwines.com</button>
+		<button onclick="window.open('https://github.com/jaredwines/text-to-ascii-art', '_blank');">View on GitHub</button>
+		
+		<div id="copy-notification">Copied!</div>
+		
+		<script src="assets/fonts/font1.js"></script>
+		<script src="assets/scripts/main.js"></script>
+	</body>
+</html>

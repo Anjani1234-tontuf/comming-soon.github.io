@@ -1,0 +1,23 @@
+{
+  "name": "kpop-random-dance",
+  "authors": [
+    "Lizzie Li <etli2013@gmail.com>"
+  ],
+  "description": "K-pop Random Dance Generator",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "handlebars": "^4.0.5",
+    "normalize-css": "^6.0.0"
+  }
+}

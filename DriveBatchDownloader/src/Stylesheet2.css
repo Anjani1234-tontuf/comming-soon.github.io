@@ -1,0 +1,86 @@
+<!-- This CSS package applies Google styling; it should always be included. -->
+<link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+
+<style>
+
+.padding {
+  padding: 5px;
+}
+
+.result-display {
+  margin-left: 15px;
+  font-size: 125%;
+}
+
+.error {
+  color: #FF0000;
+}
+
+.hidden, .not-expandable {
+  display: none;
+}
+
+.group {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.container {
+  width: 75%;
+  margin: auto;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.loading {
+  font-style: italic;
+  color: Gray;
+}
+
+.expand {
+  cursor: pointer;
+  color: #15c;
+}
+
+.expand:hover {
+  color: White;
+}
+
+.selected, li:nth-of-type(odd).selected {
+  background: SkyBlue;
+}
+
+.margin-left {
+  margin-left: 15px;
+}
+
+input.width {
+  width: 70px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+li { 
+  padding-left: 5px;
+  background: WhiteSmoke; 
+}
+
+li:hover, li:nth-of-type(odd):hover {
+  background: DeepSkyBlue;
+}
+
+li:nth-of-type(odd) { 
+  background: LightGray; 
+}
+
+input[type=url] {
+  width: 100%;
+}
+
+</style>

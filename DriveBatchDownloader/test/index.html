@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base target="_top">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="container" class="container-sm">
+        <div id="main">
+            <!-- Header -->
+            <div class="text-center">
+                <h2>Drive Batch Downloader v2.0</h2>
+            </div>
+
+            <!-- Badges -->
+            <div id="badges-conainer">
+
+            </div>
+
+            <!-- Input file URL -->
+            <div id="input-url-container">
+                <label for="input-file-url">
+                    <h4>Enter file address</h4>
+                </label>
+                <div class="input-group mb-3">
+                    <div id="input-url-help-text" class="input-group-prepend">
+                        <span class="input-group-text border-secondary">URL:</span>
+                    </div>
+                    <input type="url" id="input-file-url" class="form-control border-secondary border-left-0"
+                        placeholder="http://www.example.com/image.jpeg">
+                </div>
+            </div>
+
+            <!-- Sequential Settings -->
+            <div id="sequential-settings-group" class="container-fluid px-0 my-3">
+                <button id="btn-show-sequential-settings" type="button" class="btn btn-outline-secondary"
+                    data-toggle="collapse" data-target="#sequential-settings-box" aria-expanded="false"
+                    aria-controls="sequential-settings-box" data-toggle="tooltip"
+                    title="Show sequential downloading settings">
+                    <span id="sequential-state">Batch Downloading Settings</span>
+                </button>
+
+                <!-- Sequential Hidden Box -->
+                <div id="sequential-settings-box" class="p-1 my-2 border border-secondary rounded collapse">
+                    <div id="sequential-info-container" class="mb-1 mx-1">
+                        <h5>Replace asterisk (*) to numbers
+                            <button type="button" id="sequential-info-btn" class="btn btn-default p-1"
+                                data-toggle="modal" data-target="#myInfoModal" data-content="#mc-sequential-info">
+                                <i class="far fa-question-circle text-primary"></i>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <!-- Sequential Settings/Numbers -->
+                    <div class="d-flex justify-content-between flex-wrap my-1">
+                        <div class="input-group mx-1 w-25 min-width-150">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">From:</span>
+                            </div>
+                            <input type="number" id="number-from" class="form-control" placeholder="0" value="0" min="0"
+                                max="99">
+                        </div>
+                        <div class="input-group mx-1 w-25 min-width-150">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">To:</span>
+                            </div>
+                            <input type="number" id="number-to" class="form-control" placeholder="100" value="100"
+                                min="0">
+                        </div>
+                        <div class="input-group mx-1 w-25 min-width-150">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Wildcard Size:</span>
+                            </div>
+                            <input type="number" id="number-wildcard" class="form-control" placeholder="0" value="0"
+                                min="0" max="200">
+                        </div>
+                    </div>
+
+                    <!-- Sequential Samples -->
+                    <div class="m-1 mt-2">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-light">Generated URLs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="table-secondary">
+                                        <span>First:</span>
+                                    </th>
+                                    <td id="link-1" class="w-100"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-secondary">
+                                        <span>Second:</span>
+                                    </th>
+                                    <td id="link-2" class="w-100"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" colspan="2">...</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-secondary">
+                                        <span>Last:</span>
+                                    </th>
+                                    <td id="link-n" class="w-100"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Folder Selector -->
+            <div id="folder-conatiner-group" class="conainer-fluid my-3">
+                <h4 class="mb-0">Select a target folder</h4>
+                <div id="folder-names-border-container" class="p-1 my-2 h-25 border border-secondary rounded">
+                    <div id="folder-names-container" class="vscroll">
+                        <ul id="list-folder-names" class="list-group">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div id="btn-container" class="my-2 clearfix">
+                <button id="btn-add" class="btn btn-primary" data-toggle="tooltip"
+                    title="Add links to the Download Queue">Add</button>
+                <button id="btn-start-stop" class="btn btn-success" data-toggle="tooltip"
+                    title="Start/Stop downloading the Queue">
+                    <span>Start</span><i class="ml-2 fas fa-play"></i>
+                </button>
+                <button id="btn-clear" class="btn btn-secondary float-right" data-toggle="tooltip"
+                    title="Clear the Queue">Clear</button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div id="progress-bar-container" class="container p-0">
+                <div class="progress">
+                    <div id="download-progress-bar" class="progress-bar progress-bar-striped" style="width: 0%">0%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Downloading Queue -->
+            <div id="download-list-border-container" class="my-2 p-1 border border-secondary rounded">
+                <div id="download-list-container" class="border scroll-table-container">
+                    <table id="table-download-list" class="table table-sm table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th class="col1 text-center">Status</th>
+                                <th class="col2">File</th>
+                                <th class="col3">Folder</th>
+                                <th class="col4 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="fixed-bottom bg-light p-3">
+            <div class="m-3">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Contents (mc) -->
+    <!-- Sequential Downloading Help -->
+    <div id="mc-sequential-info" class="invisible">
+        <div class="modal-title">Sequential Downloading Help</div>
+        <div class="modal-body">
+            <div class="my-2">This feature helps add sequential file names to the download queue.</div>
+            <div class="my-2">
+                Replace the number with the asterisk (*) whilcard character in the URL for the file name
+                pattern.<br>
+                The asterisk character will become a placeholder for the increasing numbers
+                defined here.
+            </div>
+            <div class="my-2 bg-light p-2">
+                <h5>Example:</h5>
+                <div class="lead text-info">http://www.example.com/image<strong
+                        class="text-danger">1</strong>.jpeg
+                </div>
+                <div class="my-2">Replacing the number in the sample address with the asterisk (*) character
+                    will generate links in the desired number range as shown in the samples below.</div>
+                <div class="lead text-info">http://www.example.com/image<strong
+                        class="text-danger">*</strong>.jpeg
+                </div>
+                <div class="my-2">The patern will be like this:</div>
+                <div class="lead">http://www.example.com/image1.jpeg</div>
+                <div class="lead">http://www.example.com/image2.jpeg</div>
+                <div class="lead">http://www.example.com/image3.jpeg</div>
+                <div class="lead">...</div>
+            </div>
+            <div class="my-2">
+                It will add preceding zeros to the number values to accomodate the wildcard size if defined.
+                (e.g.
+                001)
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- The Info Modal -->
+    <div class="modal fade" id="myInfoModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="mr-2 mb-0"><i class="fas fa-info-circle"></i></h4>
+                    <h4 class="modal-title">Title</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Body
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="JavaScript.js"></script>
+</body>
+
+</html>

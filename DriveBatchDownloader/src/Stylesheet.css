@@ -1,0 +1,61 @@
+<style>
+
+#folder-names-container {
+    max-height: 300px;
+}
+
+#download-list-container {
+    max-height: 400px;
+}
+
+.scroll-table-container {
+    overflow-y: auto;
+}
+
+.scroll-table-container table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.scroll-table-container thead tr:nth-child(1) th {
+    background: white;
+    position: sticky;
+    top: 0;
+    border-top: none;
+    z-index: 10;
+}
+
+.scroll-table-container tbody tr td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col1, .col4 {
+    width: 10%;
+    min-width: 50px;
+}
+
+.col2 {
+    width: 50%;
+    max-width: 50%;
+}
+
+.col3 {
+    width: 30%;
+    max-width: 30%;
+}
+
+.vscroll {
+    overflow-y: auto;
+}
+
+.min-width-150 {
+    min-width: 150px;
+}
+
+li.active > button > i {
+    color: white;
+}
+
+</style>
